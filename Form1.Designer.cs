@@ -29,23 +29,17 @@ namespace _201COS_Game
         /// </summary>
         private void InitializeComponent()
         {
-            this.PnlGame = new System.Windows.Forms.Panel();
             this.TextName = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TxtName = new System.Windows.Forms.TextBox();
             this.TextScore = new System.Windows.Forms.Label();
             this.LblScore = new System.Windows.Forms.Label();
             this.TextLives = new System.Windows.Forms.Label();
             this.LblLives = new System.Windows.Forms.Label();
+            this.PnlGame = new System.Windows.Forms.Panel();
+            this.PicPlayer = new System.Windows.Forms.PictureBox();
+            this.PnlGame.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicPlayer)).BeginInit();
             this.SuspendLayout();
-            // 
-            // PnlGame
-            // 
-            this.PnlGame.BackgroundImage = global::_201COS_Game.Properties.Resources.Background;
-            this.PnlGame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PnlGame.Location = new System.Drawing.Point(12, 63);
-            this.PnlGame.Name = "PnlGame";
-            this.PnlGame.Size = new System.Drawing.Size(660, 490);
-            this.PnlGame.TabIndex = 0;
             // 
             // TextName
             // 
@@ -58,13 +52,13 @@ namespace _201COS_Game
             this.TextName.TabIndex = 1;
             this.TextName.Text = "Name:";
             // 
-            // textBox1
+            // TxtName
             // 
-            this.textBox1.Location = new System.Drawing.Point(89, 11);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(117, 20);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "Please input your name";
+            this.TxtName.Location = new System.Drawing.Point(90, 12);
+            this.TxtName.Name = "TxtName";
+            this.TxtName.Size = new System.Drawing.Size(117, 20);
+            this.TxtName.TabIndex = 2;
+            this.TxtName.Text = "Please input your name";
             // 
             // TextScore
             // 
@@ -111,6 +105,29 @@ namespace _201COS_Game
             this.LblLives.TabIndex = 6;
             this.LblLives.Text = "5";
             // 
+            // PnlGame
+            // 
+            this.PnlGame.BackgroundImage = global::_201COS_Game.Properties.Resources.Background;
+            this.PnlGame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PnlGame.Controls.Add(this.PicPlayer);
+            this.PnlGame.Location = new System.Drawing.Point(12, 63);
+            this.PnlGame.Name = "PnlGame";
+            this.PnlGame.Size = new System.Drawing.Size(660, 490);
+            this.PnlGame.TabIndex = 0;
+            // 
+            // PicPlayer
+            // 
+            this.PicPlayer.BackColor = System.Drawing.Color.Transparent;
+            this.PicPlayer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PicPlayer.Image = global::_201COS_Game.Properties.Resources.Player;
+            this.PicPlayer.InitialImage = global::_201COS_Game.Properties.Resources.Player;
+            this.PicPlayer.Location = new System.Drawing.Point(277, 219);
+            this.PicPlayer.Name = "PicPlayer";
+            this.PicPlayer.Size = new System.Drawing.Size(98, 66);
+            this.PicPlayer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicPlayer.TabIndex = 0;
+            this.PicPlayer.TabStop = false;
+            // 
             // FrmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -121,12 +138,14 @@ namespace _201COS_Game
             this.Controls.Add(this.TextLives);
             this.Controls.Add(this.LblScore);
             this.Controls.Add(this.TextScore);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.TxtName);
             this.Controls.Add(this.TextName);
             this.Controls.Add(this.PnlGame);
             this.DoubleBuffered = true;
             this.Name = "FrmGame";
             this.Text = "Angry Nerds";
+            this.PnlGame.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PicPlayer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,11 +155,12 @@ namespace _201COS_Game
 
         private System.Windows.Forms.Panel PnlGame;
         private System.Windows.Forms.Label TextName;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TxtName;
         private System.Windows.Forms.Label TextScore;
         private System.Windows.Forms.Label LblScore;
         private System.Windows.Forms.Label TextLives;
         private System.Windows.Forms.Label LblLives;
+        private System.Windows.Forms.PictureBox PicPlayer;
     }
 }
 
