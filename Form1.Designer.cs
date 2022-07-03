@@ -29,6 +29,7 @@ namespace _201COS_Game
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.TextName = new System.Windows.Forms.Label();
             this.TxtName = new System.Windows.Forms.TextBox();
             this.TextScore = new System.Windows.Forms.Label();
@@ -36,9 +37,7 @@ namespace _201COS_Game
             this.TextLives = new System.Windows.Forms.Label();
             this.LblLives = new System.Windows.Forms.Label();
             this.PnlGame = new System.Windows.Forms.Panel();
-            this.PicPlayer = new System.Windows.Forms.PictureBox();
-            this.PnlGame.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicPlayer)).BeginInit();
+            this.TmrPlayer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // TextName
@@ -54,6 +53,7 @@ namespace _201COS_Game
             // 
             // TxtName
             // 
+            this.TxtName.Enabled = false;
             this.TxtName.Location = new System.Drawing.Point(90, 12);
             this.TxtName.Name = "TxtName";
             this.TxtName.Size = new System.Drawing.Size(117, 20);
@@ -109,24 +109,16 @@ namespace _201COS_Game
             // 
             this.PnlGame.BackgroundImage = global::_201COS_Game.Properties.Resources.Background;
             this.PnlGame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PnlGame.Controls.Add(this.PicPlayer);
             this.PnlGame.Location = new System.Drawing.Point(12, 63);
             this.PnlGame.Name = "PnlGame";
             this.PnlGame.Size = new System.Drawing.Size(660, 490);
             this.PnlGame.TabIndex = 0;
+            this.PnlGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlGame_Paint);
             // 
-            // PicPlayer
+            // TmrPlayer
             // 
-            this.PicPlayer.BackColor = System.Drawing.Color.Transparent;
-            this.PicPlayer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PicPlayer.Image = global::_201COS_Game.Properties.Resources.Player;
-            this.PicPlayer.InitialImage = global::_201COS_Game.Properties.Resources.Player;
-            this.PicPlayer.Location = new System.Drawing.Point(277, 219);
-            this.PicPlayer.Name = "PicPlayer";
-            this.PicPlayer.Size = new System.Drawing.Size(98, 66);
-            this.PicPlayer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PicPlayer.TabIndex = 0;
-            this.PicPlayer.TabStop = false;
+            this.TmrPlayer.Enabled = true;
+            this.TmrPlayer.Tick += new System.EventHandler(this.TmrPlayer_Tick);
             // 
             // FrmGame
             // 
@@ -142,10 +134,12 @@ namespace _201COS_Game
             this.Controls.Add(this.TextName);
             this.Controls.Add(this.PnlGame);
             this.DoubleBuffered = true;
+            this.KeyPreview = true;
             this.Name = "FrmGame";
             this.Text = "Angry Nerds";
-            this.PnlGame.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PicPlayer)).EndInit();
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FrmGame_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,7 +154,7 @@ namespace _201COS_Game
         private System.Windows.Forms.Label LblScore;
         private System.Windows.Forms.Label TextLives;
         private System.Windows.Forms.Label LblLives;
-        private System.Windows.Forms.PictureBox PicPlayer;
+        private System.Windows.Forms.Timer TmrPlayer;
     }
 }
 
