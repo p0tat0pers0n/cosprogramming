@@ -15,17 +15,32 @@ namespace _201COS_Game
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right;
-        Player player = new Player();
+        readonly Player player = new Player();
         public FrmGame()
         {
             InitializeComponent();
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
         }
 
+        private void FrmGame_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.W) { up = false; }
+            if (e.KeyData == Keys.A) { left = false; }
+            if (e.KeyData == Keys.S) { down = false; }
+            if (e.KeyData == Keys.D) { right = false; }
+        }
+        private void PnlGame_MouseMove(object sender, MouseEventArgs e)
+        {
+            player.mouseX = e.X;
+            player.mouseY = e.Y;
+        }
+
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
             //Draw the player
+            player.MovePlayer();
+            player.RotatePlayer();
             player.DrawPlayer(g);
         }
 
@@ -36,24 +51,14 @@ namespace _201COS_Game
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
         }
-
-        private void FrmGame_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.W) { up = false; }
-            if (e.KeyData == Keys.A) { left = false; }
-            if (e.KeyData == Keys.S) { down = false; }
-            if (e.KeyData == Keys.D) { right = false; }
-        }
-
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
-            if (up) { player.y = player.y + 5; }
-            if (down) { player.y = player.y - 5; }
-            if (left) { player.x = player.x - 5; }
-            if (right) { player.x = player.x + 5; }
+            if (up) { player.y -= 5; }
+            if (down) { player.y += 5; }
+            if (left) { player.x -= 5; }
+            if (right) { player.x += 5; }
 
             PnlGame.Invalidate();
-            Invalidate();
         }
     }
 }

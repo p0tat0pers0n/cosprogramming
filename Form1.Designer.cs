@@ -114,10 +114,12 @@ namespace _201COS_Game
             this.PnlGame.Size = new System.Drawing.Size(660, 490);
             this.PnlGame.TabIndex = 0;
             this.PnlGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlGame_Paint);
+            this.PnlGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseMove);
             // 
             // TmrPlayer
             // 
             this.TmrPlayer.Enabled = true;
+            this.TmrPlayer.Interval = 10;
             this.TmrPlayer.Tick += new System.EventHandler(this.TmrPlayer_Tick);
             // 
             // FrmGame
@@ -137,7 +139,6 @@ namespace _201COS_Game
             this.KeyPreview = true;
             this.Name = "FrmGame";
             this.Text = "Angry Nerds";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FrmGame_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);
             this.ResumeLayout(false);
