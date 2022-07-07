@@ -17,8 +17,6 @@ namespace _201COS_Game
         public Point centre;
 
         public Rectangle playerRec;//variable for a rectangle to place our image in
-       
-
 
         //Create a constructor (initialises the values of the fields)
         public Player()
@@ -35,7 +33,7 @@ namespace _201COS_Game
         }
         public void RotatePlayer()
         {
-            rotationAngle = mouseX - mouseY - 15;
+            rotationAngle = Math.Abs(mouseX - mouseY);
         }
 
         public void MovePlayer()

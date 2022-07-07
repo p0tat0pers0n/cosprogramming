@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Numerics;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +17,9 @@ namespace _201COS_Game
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right;
+        int x, y;
         readonly Player player = new Player();
+        Image _Image = Properties.Resources.Player;
         public FrmGame()
         {
             InitializeComponent();
@@ -31,17 +35,44 @@ namespace _201COS_Game
         }
         private void PnlGame_MouseMove(object sender, MouseEventArgs e)
         {
-            player.mouseX = e.X;
-            player.mouseY = e.Y;
+            //get the direction of the mouse by looking at the position of the picture box in relation to the mouse pointer
+            Vector2 PicPlayerPlane = new Vector2(e.X - PicPlayer.Location.X, e.Y - PicPlayer.Location.Y);
+
+            //https://en.wikipedia.org/wiki/Atan2
+            //atan2 - calculates the angle between the x axis and the ray line to a point. gt 0
+            //57.2978 is a constant used for radians to degrees conversion (One radian is equal 57.295779513 degrees)
+            //https://en.wikipedia.org/wiki/Radian
+            float convertToDeg = (float)(180 / Math.PI);
+
+            float angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y, PicPlayerPlane.X) * convertToDeg);
+
+            //dispose the previously drawn image if there was an image (? - null conditional)
+            PicPlayer.Image?.Dispose();
+
+            Bitmap calcBitmap = new Bitmap(_Image, PicPlayer.Size.Width, PicPlayer.Size.Height);
+
+            //set picture box 2 to the rotated source image.
+            PicPlayer.Image = RotateImage(calcBitmap, angleCalc);
+        }
+        public Bitmap RotateImage(Bitmap calcBitMap, float angle)
+        {
+            using (Graphics g = Graphics.FromImage(calcBitMap))
+            {
+                //move rotation point to center of image
+                g.TranslateTransform((float)calcBitMap.Width / 2, (float)calcBitMap.Height / 2);
+                //rotate
+                g.RotateTransform(angle);
+                //move image back
+                g.TranslateTransform(-(float)calcBitMap.Width / 2, -(float)calcBitMap.Height / 2);
+                //draw passed in image onto graphics object
+                g.DrawImage(calcBitMap, new PointF(0, 0));
+            }
+            return calcBitMap;
         }
 
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
-            g = e.Graphics;
-            //Draw the player
-            player.MovePlayer();
-            player.RotatePlayer();
-            player.DrawPlayer(g);
+           
         }
 
         private void FrmGame_KeyDown(object sender, KeyEventArgs e)
@@ -53,10 +84,11 @@ namespace _201COS_Game
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
-            if (up) { player.y -= 5; }
-            if (down) { player.y += 5; }
-            if (left) { player.x -= 5; }
-            if (right) { player.x += 5; }
+            PicPlayer.Location = new Point(x, y);
+            if (up) { y -= 5; PicPlayer.Location = new Point (x,y); }
+            if (down) { y += 5; PicPlayer.Location = new Point(x, y); }
+            if (left) { x -= 5; PicPlayer.Location = new Point(x, y); }
+            if (right) { x += 5; PicPlayer.Location = new Point(x, y); }
 
             PnlGame.Invalidate();
         }
