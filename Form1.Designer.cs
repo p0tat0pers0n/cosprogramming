@@ -129,9 +129,9 @@ namespace _201COS_Game
             // PicPlayer
             // 
             this.PicPlayer.BackColor = System.Drawing.Color.Transparent;
-            this.PicPlayer.Location = new System.Drawing.Point(255, 211);
+            this.PicPlayer.Location = new System.Drawing.Point(278, 210);
             this.PicPlayer.Name = "PicPlayer";
-            this.PicPlayer.Size = new System.Drawing.Size(168, 96);
+            this.PicPlayer.Size = new System.Drawing.Size(100, 100);
             this.PicPlayer.TabIndex = 0;
             this.PicPlayer.TabStop = false;
             // 
@@ -149,9 +149,12 @@ namespace _201COS_Game
             this.Controls.Add(this.TextName);
             this.Controls.Add(this.PnlGame);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.KeyPreview = true;
+            this.MaximizeBox = false;
             this.Name = "FrmGame";
             this.Text = "Angry Nerds";
+            this.Load += new System.EventHandler(this.FrmGame_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);
             this.PnlGame.ResumeLayout(false);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Numerics;
 using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,48 +12,55 @@ namespace _201COS_Game
 {
     class Player
     {
-        public int x, y, width, height, rotationAngle, mouseX, mouseY;//variables for the rectangle
-        public Image player;//variable for the spaceship's image
-        public Matrix matrix;
-        public Point centre;
-
-        public Rectangle playerRec;//variable for a rectangle to place our image in
+        Image _Image = Properties.Resources.player2;
 
         //Create a constructor (initialises the values of the fields)
         public Player()
         {
-            x = 10;
-            y = 350;
-            mouseX = 0;
-            mouseY = 0;
-            rotationAngle = 0;
-            width = 73;
-            height = 39;
-            player = Properties.Resources.Player;
-            playerRec = new Rectangle(x, y, width, height);
         }
-        public void RotatePlayer()
+        public void RotatePlayer(float mouseX, float mouseY, Rectangle PlayerRec, Graphics g)
         {
-            rotationAngle = Math.Abs(mouseX - mouseY);
+            //get the direction of the mouse by looking at the position of the picture box in relation to the mouse pointer
+            Vector2 PicPlayerPlane = new Vector2(mouseX - PlayerRec.Location.X, mouseY - PlayerRec.Location.Y);
+
+            //https://en.wikipedia.org/wiki/Atan2
+            //atan2 - calculates the angle between the x axis and the ray line to a point. gt 0
+            //57.2978 is a constant used for radians to degrees conversion (One radian is equal 57.295779513 degrees)
+            //https://en.wikipedia.org/wiki/Radian
+            float convertToDeg = (float)(180 / Math.PI);
+
+            float angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y, PicPlayerPlane.X) * convertToDeg);
+
+            //dispose the previously drawn image if there was an image (? - null conditional)
+            //PlayerRec.Image?.Dispose();
+
+            Bitmap calcBitmap = new Bitmap(_Image, 100, 100);
+
+            //set picture box 2 to the rotated source image.
+            Image PlayerImg = RotateImage(calcBitmap, angleCalc, PlayerRec);
+            g.DrawImage(PlayerImg, PlayerRec);
+        }
+
+        public Bitmap RotateImage(Bitmap calcBitMap, float angle, Rectangle PlayerRec)
+        {
+            using (Graphics g = Graphics.FromImage(calcBitMap))
+            {
+                //move rotation point to center of image
+                g.TranslateTransform((float)calcBitMap.Width / 2, (float)calcBitMap.Height / 2);
+                //rotate
+                g.RotateTransform(angle);
+                //move image back
+                g.TranslateTransform(-(float)calcBitMap.Width / 2, -(float)calcBitMap.Height / 2);
+                //draw passed in image onto graphics object
+                g.DrawImage(calcBitMap, new PointF(0, 0));
+            }
+            return calcBitMap;
         }
 
         public void MovePlayer()
         {
-            playerRec.X = x;
-            playerRec.Y = y;
-        }
+            
 
-        public void DrawPlayer(Graphics g)
-        {
-            //find the centre point of spaceRec
-            centre = new Point(playerRec.X + width / 2, playerRec.Y + width / 2);
-            //instantiate a Matrix object called matrix
-            matrix = new Matrix();
-            //rotate the matrix (spaceRec) about its centre
-            matrix.RotateAt(rotationAngle, centre);
-            //Set the current draw location to the rotated matrix point
-            g.Transform = matrix;
-            g.DrawImage(player, playerRec);
         }
     }
 }
