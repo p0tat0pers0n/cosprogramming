@@ -13,6 +13,8 @@ namespace _201COS_Game
     class Player
     {
         Image _Image = Properties.Resources.player2;
+        int x, y;
+        Bitmap PlayerImg;
 
         //Create a constructor (initialises the values of the fields)
         public Player()
@@ -21,7 +23,7 @@ namespace _201COS_Game
         public void RotatePlayer(float mouseX, float mouseY, Rectangle PlayerRec, Graphics g)
         {
             //get the direction of the mouse by looking at the position of the picture box in relation to the mouse pointer
-            Vector2 PicPlayerPlane = new Vector2(mouseX - PlayerRec.Location.X, mouseY - PlayerRec.Location.Y);
+            Vector2 PicPlayerPlane = new Vector2(mouseX - PlayerRec.Location.X - 10, mouseY - PlayerRec.Location.Y);
 
             //https://en.wikipedia.org/wiki/Atan2
             //atan2 - calculates the angle between the x axis and the ray line to a point. gt 0
@@ -34,14 +36,16 @@ namespace _201COS_Game
             //dispose the previously drawn image if there was an image (? - null conditional)
             //PlayerRec.Image?.Dispose();
 
+            PlayerRec.Location = new Point(x, y);
+
             Bitmap calcBitmap = new Bitmap(_Image, 100, 100);
 
             //set picture box 2 to the rotated source image.
-            Image PlayerImg = RotateImage(calcBitmap, angleCalc, PlayerRec);
+            PlayerImg = RotateImage(calcBitmap, angleCalc);
             g.DrawImage(PlayerImg, PlayerRec);
         }
 
-        public Bitmap RotateImage(Bitmap calcBitMap, float angle, Rectangle PlayerRec)
+        public Bitmap RotateImage(Bitmap calcBitMap, float angle)
         {
             using (Graphics g = Graphics.FromImage(calcBitMap))
             {
@@ -57,10 +61,12 @@ namespace _201COS_Game
             return calcBitMap;
         }
 
-        public void MovePlayer()
+        public void MovePlayer(Rectangle PlayerRec, bool up, bool down, bool left, bool right, Graphics g)
         {
-            
-
+            if (up) { y -= 5;}
+            if (down) { y += 5;}
+            if (left) { x -= 5;}
+            if (right) { x += 5;}
         }
     }
 }

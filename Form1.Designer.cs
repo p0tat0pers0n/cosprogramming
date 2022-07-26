@@ -38,9 +38,6 @@ namespace _201COS_Game
             this.LblLives = new System.Windows.Forms.Label();
             this.TmrPlayer = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
-            this.PicPlayer = new System.Windows.Forms.PictureBox();
-            this.PnlGame.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicPlayer)).BeginInit();
             this.SuspendLayout();
             // 
             // TextName
@@ -118,22 +115,12 @@ namespace _201COS_Game
             // 
             this.PnlGame.BackgroundImage = global::_201COS_Game.Properties.Resources.Background;
             this.PnlGame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PnlGame.Controls.Add(this.PicPlayer);
             this.PnlGame.Location = new System.Drawing.Point(12, 63);
             this.PnlGame.Name = "PnlGame";
             this.PnlGame.Size = new System.Drawing.Size(660, 490);
             this.PnlGame.TabIndex = 0;
             this.PnlGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlGame_Paint);
             this.PnlGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseMove);
-            // 
-            // PicPlayer
-            // 
-            this.PicPlayer.BackColor = System.Drawing.Color.Transparent;
-            this.PicPlayer.Location = new System.Drawing.Point(278, 210);
-            this.PicPlayer.Name = "PicPlayer";
-            this.PicPlayer.Size = new System.Drawing.Size(100, 100);
-            this.PicPlayer.TabIndex = 0;
-            this.PicPlayer.TabStop = false;
             // 
             // FrmGame
             // 
@@ -157,8 +144,6 @@ namespace _201COS_Game
             this.Load += new System.EventHandler(this.FrmGame_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);
-            this.PnlGame.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PicPlayer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,7 +159,6 @@ namespace _201COS_Game
         private System.Windows.Forms.Label TextLives;
         private System.Windows.Forms.Label LblLives;
         private System.Windows.Forms.Timer TmrPlayer;
-        private System.Windows.Forms.PictureBox PicPlayer;
     }
 }
 

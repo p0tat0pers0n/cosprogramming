@@ -17,7 +17,7 @@ namespace _201COS_Game
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right;
-        int x, y;
+        int mouseX, mouseY;
         Player player = new Player();
         Rectangle PlayerRec = new Rectangle();
 
@@ -42,12 +42,14 @@ namespace _201COS_Game
 
         private void PnlGame_MouseMove(object sender, MouseEventArgs e)
         {
-            player.RotatePlayer(e.X, e.Y, PlayerRec, g);
+            mouseX = e.X;
+            mouseY = e.Y;
         }
-
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
-           
+            g = e.Graphics;
+            player.RotatePlayer(mouseX, mouseY, PlayerRec, g);
+            player.MovePlayer(PlayerRec, up, down, left, right, g);
         }
 
         private void FrmGame_KeyDown(object sender, KeyEventArgs e)
@@ -59,12 +61,6 @@ namespace _201COS_Game
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
-            PicPlayer.Location = new Point(x, y);
-            if (up) { y -= 5; PicPlayer.Location = new Point (x,y); }
-            if (down) { y += 5; PicPlayer.Location = new Point(x, y); }
-            if (left) { x -= 5; PicPlayer.Location = new Point(x, y); }
-            if (right) { x += 5; PicPlayer.Location = new Point(x, y); }
-
             PnlGame.Invalidate();
         }
     }
