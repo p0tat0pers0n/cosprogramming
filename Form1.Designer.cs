@@ -37,6 +37,7 @@ namespace _201COS_Game
             this.TextLives = new System.Windows.Forms.Label();
             this.LblLives = new System.Windows.Forms.Label();
             this.TmrPlayer = new System.Windows.Forms.Timer(this.components);
+            this.TmrGun = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
@@ -111,6 +112,11 @@ namespace _201COS_Game
             this.TmrPlayer.Interval = 10;
             this.TmrPlayer.Tick += new System.EventHandler(this.TmrPlayer_Tick);
             // 
+            // TmrGun
+            // 
+            this.TmrGun.Enabled = true;
+            this.TmrGun.Tick += new System.EventHandler(this.TmrGun_Tick);
+            // 
             // PnlGame
             // 
             this.PnlGame.BackgroundImage = global::_201COS_Game.Properties.Resources.Background;
@@ -144,6 +150,8 @@ namespace _201COS_Game
             this.Load += new System.EventHandler(this.FrmGame_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FrmGame_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FrmGame_MouseUp);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -159,6 +167,7 @@ namespace _201COS_Game
         private System.Windows.Forms.Label TextLives;
         private System.Windows.Forms.Label LblLives;
         private System.Windows.Forms.Timer TmrPlayer;
+        private System.Windows.Forms.Timer TmrGun;
     }
 }
 

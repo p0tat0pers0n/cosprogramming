@@ -18,8 +18,10 @@ namespace _201COS_Game
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right;
         int mouseX, mouseY;
+        bool mouseState;
         Player player = new Player();
         Rectangle PlayerRec = new Rectangle();
+        List<Bullet> bullets = new List<Bullet>();
 
         public FrmGame()
         {
@@ -40,6 +42,30 @@ namespace _201COS_Game
             PlayerRec = new Rectangle(278, 210, 100, 100);
         }
 
+        private void FrmGame_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseState = true;
+            }
+        }
+
+        private void FrmGame_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseState = false;
+            }
+        }
+
+        private void TmrGun_Tick(object sender, EventArgs e)
+        {
+            if (mouseState)
+            {
+                
+            }
+        }
+
         private void PnlGame_MouseMove(object sender, MouseEventArgs e)
         {
             mouseX = e.X;
@@ -48,8 +74,12 @@ namespace _201COS_Game
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
-            player.RotatePlayer(mouseX, mouseY, PlayerRec, g);
-            player.MovePlayer(PlayerRec, up, down, left, right, g);
+            player.MoveRotatePlayer(mouseX, mouseY, PlayerRec, g, up, down, left, right);
+
+            foreach (Bullet m in bullets)
+            {
+                m.draw(g);
+            }
         }
 
         private void FrmGame_KeyDown(object sender, KeyEventArgs e)
