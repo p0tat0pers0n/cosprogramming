@@ -115,6 +115,7 @@ namespace _201COS_Game
             // TmrGun
             // 
             this.TmrGun.Enabled = true;
+            this.TmrGun.Interval = 50;
             this.TmrGun.Tick += new System.EventHandler(this.TmrGun_Tick);
             // 
             // PnlGame
@@ -126,7 +127,9 @@ namespace _201COS_Game
             this.PnlGame.Size = new System.Drawing.Size(660, 490);
             this.PnlGame.TabIndex = 0;
             this.PnlGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlGame_Paint);
+            this.PnlGame.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseDown);
             this.PnlGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseMove);
+            this.PnlGame.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseUp);
             // 
             // FrmGame
             // 
@@ -150,8 +153,6 @@ namespace _201COS_Game
             this.Load += new System.EventHandler(this.FrmGame_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FrmGame_MouseDown);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FrmGame_MouseUp);
             this.ResumeLayout(false);
             this.PerformLayout();
 

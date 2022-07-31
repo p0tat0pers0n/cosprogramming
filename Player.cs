@@ -13,13 +13,14 @@ namespace _201COS_Game
     class Player
     {
         Image _Image;
-        int x, y;
+        public int x, y;
         Bitmap PlayerImg;
+        public float angleCalc;
 
         //Create a constructor (initialises the values of the fields)
         public Player()
         {
-            _Image = Properties.Resources.player2;
+            _Image = Properties.Resources.player2;   
         }
         public void MoveRotatePlayer(float mouseX, float mouseY, Rectangle PlayerRec, Graphics g, bool up, bool down, bool left, bool right)
         {
@@ -39,7 +40,7 @@ namespace _201COS_Game
             //https://en.wikipedia.org/wiki/Radian
             float convertToDeg = (float)(180 / Math.PI);
 
-            float angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y, PicPlayerPlane.X) * convertToDeg);
+            angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y, PicPlayerPlane.X) * convertToDeg);
 
             //dispose the previously drawn image if there was an image (? - null conditional)
             //PlayerRec.Image?.Dispose();

@@ -42,28 +42,22 @@ namespace _201COS_Game
             PlayerRec = new Rectangle(278, 210, 100, 100);
         }
 
-        private void FrmGame_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                mouseState = true;
-            }
-        }
-
-        private void FrmGame_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                mouseState = false;
-            }
-        }
-
         private void TmrGun_Tick(object sender, EventArgs e)
         {
             if (mouseState)
             {
-                
+                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
             }
+        }
+
+        private void PnlGame_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseState = true;
+        }
+
+        private void PnlGame_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseState = false;
         }
 
         private void PnlGame_MouseMove(object sender, MouseEventArgs e)
@@ -76,9 +70,10 @@ namespace _201COS_Game
             g = e.Graphics;
             player.MoveRotatePlayer(mouseX, mouseY, PlayerRec, g, up, down, left, right);
 
-            foreach (Bullet m in bullets)
+            foreach (Bullet b in bullets)
             {
-                m.draw(g);
+                b.draw(g);
+                b.moveBullet(g);
             }
         }
 
