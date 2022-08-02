@@ -22,6 +22,7 @@ namespace _201COS_Game
         Player player = new Player();
         Rectangle PlayerRec = new Rectangle();
         List<Bullet> bullets = new List<Bullet>();
+        List<Alien> aliens = new List<Alien>();
 
         public FrmGame()
         {
@@ -60,6 +61,11 @@ namespace _201COS_Game
             mouseState = false;
         }
 
+        private void TmrAlienSpawn_Tick(object sender, EventArgs e)
+        {
+            aliens.Add(new Alien());
+        }
+
         private void PnlGame_MouseMove(object sender, MouseEventArgs e)
         {
             mouseX = e.X;
@@ -74,6 +80,12 @@ namespace _201COS_Game
             {
                 b.draw(g);
                 b.moveBullet(g);
+            }
+
+            foreach (Alien a in aliens)
+            {
+                a.draw(g);
+                a.moveAlien();
             }
         }
 

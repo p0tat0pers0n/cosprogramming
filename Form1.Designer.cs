@@ -39,6 +39,7 @@ namespace _201COS_Game
             this.TmrPlayer = new System.Windows.Forms.Timer(this.components);
             this.TmrGun = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
+            this.TmrAlienSpawn = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // TextName
@@ -115,7 +116,6 @@ namespace _201COS_Game
             // TmrGun
             // 
             this.TmrGun.Enabled = true;
-            this.TmrGun.Interval = 50;
             this.TmrGun.Tick += new System.EventHandler(this.TmrGun_Tick);
             // 
             // PnlGame
@@ -130,6 +130,12 @@ namespace _201COS_Game
             this.PnlGame.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseDown);
             this.PnlGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseMove);
             this.PnlGame.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseUp);
+            // 
+            // TmrAlienSpawn
+            // 
+            this.TmrAlienSpawn.Enabled = true;
+            this.TmrAlienSpawn.Interval = 1000;
+            this.TmrAlienSpawn.Tick += new System.EventHandler(this.TmrAlienSpawn_Tick);
             // 
             // FrmGame
             // 
@@ -169,6 +175,7 @@ namespace _201COS_Game
         private System.Windows.Forms.Label LblLives;
         private System.Windows.Forms.Timer TmrPlayer;
         private System.Windows.Forms.Timer TmrGun;
+        private System.Windows.Forms.Timer TmrAlienSpawn;
     }
 }
 
