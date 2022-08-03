@@ -12,7 +12,7 @@ namespace _201COS_Game
     {
         public Rectangle bulletRec;
         public Image bullet;
-        public int x, y, width, height;
+        public int bulletX, bulletY, width, height;
         public int bulletRotated;
         public double xSpeed, ySpeed;
         public Matrix matrixBullet;//matrix to enable us to rotate bullet in the same angle as the player
@@ -20,8 +20,8 @@ namespace _201COS_Game
 
         public Bullet(Rectangle playerRec, int bulletRotate, int playerX, int playerY)
         {
-            x = playerRec.X + 37; // move bullet to middle of player
-            y = playerRec.Y;
+            bulletX = playerRec.X + 37; // move bullet to middle of player
+            bulletY = playerRec.Y;
             width = 10;
             height = 60;
             bullet = Properties.Resources.bullet;
@@ -31,8 +31,8 @@ namespace _201COS_Game
             xSpeed = 30 * (Math.Cos((bulletRotate - 90) * Math.PI / 180));
             ySpeed = 30 * (Math.Sin((bulletRotate + 90) * Math.PI / 180));
             //calculate x,y to move bullet to middle of spaceship in drawBullet method
-            x = playerX + playerRec.Width / 2;
-            y = playerY + playerRec.Height / 2;
+            bulletX = playerX + playerRec.Width / 2;
+            bulletY = playerY + playerRec.Height / 2;
             //pass bulletRotate angle to bulletRotated so that it can be used in the drawBullet method
             bulletRotated = bulletRotate;
         }
@@ -40,7 +40,7 @@ namespace _201COS_Game
         public void draw(Graphics g)
         {
             //centre bullet 
-            centreBullet = new Point(x, y);
+            centreBullet = new Point(bulletX, bulletY);
             //instantiate a Matrix object called matrixBullet
             matrixBullet = new Matrix();
             //rotate the matrix (in this case bulletRec) about its centre
@@ -53,10 +53,9 @@ namespace _201COS_Game
 
         public void moveBullet(Graphics g)
         {
-            x += (int)xSpeed;//cast double to an integer value
-            y -= (int)ySpeed;
-            bulletRec.Location = new Point(x, y);//bullets new location
-
+            bulletX += (int)xSpeed;//cast double to an integer value
+            bulletY -= (int)ySpeed;
+            bulletRec.Location = new Point(bulletX, bulletY);//bullets new location
         }
     }
 }

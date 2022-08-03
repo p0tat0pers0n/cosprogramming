@@ -42,9 +42,6 @@ namespace _201COS_Game
 
             angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y, PicPlayerPlane.X) * convertToDeg);
 
-            //dispose the previously drawn image if there was an image (? - null conditional)
-            //PlayerRec.Image?.Dispose();
-
             Bitmap calcBitmap = new Bitmap(_Image, 100, 100);
 
             //set picture box 2 to the rotated source image.

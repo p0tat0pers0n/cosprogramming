@@ -10,7 +10,7 @@ namespace _201COS_Game
     class Alien
     {
         public Rectangle alienRec;
-        public int x,y,width,height,side,xSpawn,ySpawn;
+        public int alienX,alienY,width,height,side,xSpawn,ySpawn;
         public Image alienImg;
         //public double xSpeed, ySpeed;
         public Random sideChance;
@@ -21,7 +21,7 @@ namespace _201COS_Game
             width = 100;
             height = 100;
 
-            alienRec = new Rectangle(x,y,width,height);
+            alienRec = new Rectangle(alienX,alienY,width,height);
             alienImg = Properties.Resources.alien;
             sideChance = new Random();
             xSpawnOffset = new Random();
@@ -31,7 +31,6 @@ namespace _201COS_Game
             xSpawn = xSpawnOffset.Next(50, 600);
             ySpawn = ySpawnOffset.Next(50, 390);
             newAlien();
-
         }
 
         public void newAlien()
@@ -60,15 +59,11 @@ namespace _201COS_Game
 
         public void moveAlien()
         {
-            if (side == 1) { y -= 5; alienRec.Location = new Point(x, y); }
-            if (side == 2) { x += 5; alienRec.Location = new Point(x, y); }
-            if (side == 3) { y += 5; alienRec.Location = new Point(x, y); }
-            if (side == 4) { x -= 5; alienRec.Location = new Point(x, y); }
-
-            if (alienRec.Location.X > 660 || alienRec.Location.X < 0)
-            {
-                
-            }
+            if (side == 1) { alienY -= 5; }
+            if (side == 2) { alienX += 5; }
+            if (side == 3) { alienY += 5; }
+            if (side == 4) { alienX -= 5; }
+            alienRec.Location = new Point(alienX, alienY);
         }
 
         public void draw(Graphics g)

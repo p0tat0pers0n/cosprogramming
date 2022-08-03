@@ -17,7 +17,7 @@ namespace _201COS_Game
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right;
-        int mouseX, mouseY;
+        int mouseX, mouseY, score;
         bool mouseState;
         Player player = new Player();
         Rectangle PlayerRec = new Rectangle();
@@ -48,6 +48,40 @@ namespace _201COS_Game
             if (mouseState)
             {
                 bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
+            }
+
+            foreach (Bullet b in bullets.ToList())
+            {
+
+                foreach (Alien a in aliens.ToList())
+                {
+                    if (b.bulletRec.IntersectsWith(a.alienRec))
+                    {
+                        bullets.Remove(b);
+                        aliens.Remove(a);
+                        score++;
+                        LblScore.Text = score.ToString();
+                        break;
+                    }
+                    
+                    if (b.bulletRec.Location.X > 660 || b.bulletRec.Location.X < 0)
+                    {
+                        bullets.Remove(b);
+                    }
+                    if (b.bulletRec.Location.Y > 490 || b.bulletRec.Location.Y < 0)
+                    {
+                        bullets.Remove(b);
+                    }
+                    /////////////////////////////////////////////////////////////
+                    if (a.alienRec.Location.X > 660 || a.alienRec.Location.X < 0)
+                    {
+                        aliens.Remove(a);
+                    }
+                    if (a.alienRec.Location.Y > 490 || a.alienRec.Location.Y < 0)
+                    {
+                        aliens.Remove(a);
+                    }
+                }
             }
         }
 
