@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
 
 namespace _201COS_Game
@@ -16,10 +17,12 @@ namespace _201COS_Game
         public Random sideChance;
         public Random xSpawnOffset;
         public Random ySpawnOffset;
+        public Matrix matrixAlien;
+        Point centreAlien;
         public Alien()
         {
-            width = 100;
-            height = 100;
+            width = 75;
+            height = 75;
 
             alienRec = new Rectangle(alienX,alienY,width,height);
             alienImg = Properties.Resources.alien;
@@ -68,6 +71,15 @@ namespace _201COS_Game
 
         public void draw(Graphics g)
         {
+            //centre bullet 
+            centreAlien = new Point(alienX, alienY);
+            //instantiate a Matrix object called matrixBullet
+            matrixAlien = new Matrix();
+            //rotate the matrix (in this case bulletRec) about its centre
+            matrixAlien.RotateAt(0, centreAlien);
+            //Set the current draw location to the rotated matrix point i.e. where bulletRec is now
+            g.Transform = matrixAlien;
+            //Draw the bullet
             g.DrawImage(alienImg, alienRec);
         }
     }

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Threading.Tasks;
 
 namespace _201COS_Game
 {
@@ -51,7 +47,7 @@ namespace _201COS_Game
             g.DrawImage(bullet, bulletRec);
         }
 
-        public void moveBullet(Graphics g)
+        public void moveBullet()
         {
             bulletX += (int)xSpeed;//cast double to an integer value
             bulletY -= (int)ySpeed;

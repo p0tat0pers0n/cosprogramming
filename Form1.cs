@@ -113,7 +113,7 @@ namespace _201COS_Game
             foreach (Bullet b in bullets)
             {
                 b.draw(g);
-                b.moveBullet(g);
+                b.moveBullet();
             }
 
             foreach (Alien a in aliens)
