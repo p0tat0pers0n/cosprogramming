@@ -116,7 +116,7 @@ namespace _201COS_Game
             // TmrGun
             // 
             this.TmrGun.Enabled = true;
-            this.TmrGun.Interval = 150;
+            this.TmrGun.Interval = 50;
             this.TmrGun.Tick += new System.EventHandler(this.TmrGun_Tick);
             // 
             // PnlGame

@@ -18,7 +18,6 @@ namespace _201COS_Game
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right;
         int mouseX, mouseY, score;
-        bool mouseState;
         Player player = new Player();
         Rectangle PlayerRec = new Rectangle();
         List<Bullet> bullets = new List<Bullet>();
@@ -45,11 +44,6 @@ namespace _201COS_Game
 
         private void TmrGun_Tick(object sender, EventArgs e)
         {
-            if (mouseState)
-            {
-                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
-            }
-
             foreach (Bullet b in bullets.ToList())
             {
 
@@ -87,12 +81,11 @@ namespace _201COS_Game
 
         private void PnlGame_MouseDown(object sender, MouseEventArgs e)
         {
-            mouseState = true;
+            bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
         }
 
         private void PnlGame_MouseUp(object sender, MouseEventArgs e)
         {
-            mouseState = false;
         }
 
         private void TmrAlienSpawn_Tick(object sender, EventArgs e)
@@ -129,9 +122,17 @@ namespace _201COS_Game
            if (e.KeyData == Keys.A) { left = true; }
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
+
+           if (e.KeyData == Keys.G) { MessageBox.Show(player.x.ToString(), player.y.ToString()); }
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
+            //Stops player from going off-screen
+            if (player.x > ClientSize.Width - 120) { player.x -= 10; }
+            if (player.x < 0) { player.x += 10; }
+            if (player.y > ClientSize.Height - 170) { player.y -= 10; }
+            if (player.y < 0) { player.y += 10; }
+
             PnlGame.Invalidate();
         }
     }

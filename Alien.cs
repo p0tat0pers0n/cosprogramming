@@ -29,43 +29,55 @@ namespace _201COS_Game
             sideChance = new Random();
             xSpawnOffset = new Random();
             ySpawnOffset = new Random();
-
-            side = sideChance.Next(1, 4);
-            xSpawn = xSpawnOffset.Next(50, 600);
-            ySpawn = ySpawnOffset.Next(50, 390);
             newAlien();
         }
 
         public void newAlien()
         {
+            xSpawn = xSpawnOffset.Next(50, 600);
+            ySpawn = ySpawnOffset.Next(50, 390);
+            side = sideChance.Next(1, 5);
+
             if (side == 1)
             {
                 //spawns on top going down
-                alienRec.Location = new Point(xSpawn, 0);
+                alienImg = Properties.Resources.one;
+                alienX = xSpawn;
+                alienY = 10;
+                alienRec.Location = new Point(xSpawn, 10);
             }
             if (side == 2)
             {
-                //spawns on top going down
-                alienRec.Location = new Point(620, ySpawn);
+                //spawns on right going left
+                alienImg = Properties.Resources.two;
+                alienX = 650;
+                alienY = ySpawn;
+                alienRec.Location = new Point(650, ySpawn);
             }
             if (side == 3)
             {
-                //spawns on top going down
+                //spawns on bottom going up
+                alienImg = Properties.Resources.three;
+                alienX = xSpawn;
+                alienY = 450;
                 alienRec.Location = new Point(xSpawn, 450);
             }
             if (side == 4)
             {
-                //spawns on top going down
-                alienRec.Location = new Point(0, ySpawn);
+                //spawns on left going right
+                alienImg = Properties.Resources.four;
+                alienX = 10;
+                alienY = ySpawn;
+                alienRec.Location = new Point(10, ySpawn);
             }
         }
 
         public void moveAlien()
         {
-            if (side == 1) { alienY -= 5; }
-            if (side == 2) { alienX += 5; }
-            if (side == 3) { alienY += 5; }
-            if (side == 4) { alienX -= 5; }
+            if (side == 1) { alienY += 5; }
+            if (side == 2) { alienX -= 5; }
+            if (side == 3) { alienY -= 5; }
+            if (side == 4) { alienX += 5; }
             alienRec.Location = new Point(alienX, alienY);
         }
 
