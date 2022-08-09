@@ -16,17 +16,30 @@ namespace _201COS_Game
     public partial class FrmGame : Form
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
-        bool up, down, left, right;
-        int mouseX, mouseY, score;
+        bool up, down, left, right, endGame;
+        int mouseX, mouseY, score, timeElapsed, lives;
         Player player = new Player();
+        Random spawnChance = new Random();
         Rectangle PlayerRec = new Rectangle();
         List<Bullet> bullets = new List<Bullet>();
         List<Alien> aliens = new List<Alien>();
+        List<Bomber> bombers = new List<Bomber>();
+
 
         public FrmGame()
         {
             InitializeComponent();
+            lives = 10;
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
+        }
+
+        public void LostGame()
+        {
+            TmrEnemySpawn.Enabled = false;
+            TmrGun.Enabled = false;
+            TmrPlayer.Enabled = false;
+            TmrTime.Enabled = false;
+            MessageBox.Show("You lost\nWith a time of: " + timeElapsed.ToString() + " seconds\nAnd " + score.ToString() + " kills", "Game End");
         }
 
         private void FrmGame_KeyUp(object sender, KeyEventArgs e)
@@ -66,15 +79,7 @@ namespace _201COS_Game
                     {
                         bullets.Remove(b);
                     }
-                    /////////////////////////////////////////////////////////////
-                    if (a.alienRec.Location.X > 660 || a.alienRec.Location.X < 0)
-                    {
-                        aliens.Remove(a);
-                    }
-                    if (a.alienRec.Location.Y > 490 || a.alienRec.Location.Y < 0)
-                    {
-                        aliens.Remove(a);
-                    }
+
                 }
             }
         }
@@ -88,9 +93,19 @@ namespace _201COS_Game
         {
         }
 
-        private void TmrAlienSpawn_Tick(object sender, EventArgs e)
+        private void TmrTime_Tick(object sender, EventArgs e)
+        {
+            timeElapsed++;
+            lblTime.Text = timeElapsed.ToString();
+        }
+
+        private void TmrEnemySpawn_Tick(object sender, EventArgs e)
         {
             aliens.Add(new Alien());
+            if (spawnChance.Next(1, 10) == 1)
+            {
+                bombers.Add(new Bomber());
+            }
         }
 
         private void PnlGame_MouseMove(object sender, MouseEventArgs e)
@@ -109,10 +124,35 @@ namespace _201COS_Game
                 b.moveBullet();
             }
 
-            foreach (Alien a in aliens)
+            foreach (Alien a in aliens.ToList())
             {
                 a.draw(g);
                 a.moveAlien();
+
+                /////////////////////////////////////////////////////////////
+                if (a.alienRec.Location.X > 660 || a.alienRec.Location.X < 0)
+                {
+                    aliens.Remove(a);
+                    lives--;
+                }
+                if (a.alienRec.Location.Y > 490 || a.alienRec.Location.Y < 0)
+                {
+                    aliens.Remove(a);
+                    lives--;
+                }
+
+                LblLives.Text = lives.ToString();
+                if (lives <= 0 && !endGame)
+                {
+                    endGame = true;
+                    LostGame();
+                }
+            }
+
+            foreach (Bomber t in bombers.ToList())
+            {
+                t.moveBomber();
+                t.drawBomber(g);
             }
         }
 

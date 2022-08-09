@@ -85,11 +85,11 @@ namespace _201COS_Game
         {
             //centre bullet 
             centreAlien = new Point(alienX, alienY);
-            //instantiate a Matrix object called matrixBullet
+            //instantiate a Matrix object called matrixAlien
             matrixAlien = new Matrix();
             //rotate the matrix (in this case bulletRec) about its centre
             matrixAlien.RotateAt(0, centreAlien);
-            //Set the current draw location to the rotated matrix point i.e. where bulletRec is now
+            //Set the current draw location to the rotated matrix point i.e. where alienRec is now
             g.Transform = matrixAlien;
             //Draw the bullet
             g.DrawImage(alienImg, alienRec);

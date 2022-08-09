@@ -143,6 +143,16 @@ namespace _201COS_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap taiFighter {
+            get {
+                object obj = ResourceManager.GetObject("taiFighter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap three {
             get {
                 object obj = ResourceManager.GetObject("three", resourceCulture);

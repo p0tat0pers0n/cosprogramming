@@ -38,8 +38,11 @@ namespace _201COS_Game
             this.LblLives = new System.Windows.Forms.Label();
             this.TmrPlayer = new System.Windows.Forms.Timer(this.components);
             this.TmrGun = new System.Windows.Forms.Timer(this.components);
+            this.TmrEnemySpawn = new System.Windows.Forms.Timer(this.components);
+            this.lblTime = new System.Windows.Forms.Label();
+            this.TextTime = new System.Windows.Forms.Label();
+            this.TmrTime = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
-            this.TmrAlienSpawn = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // TextName
@@ -103,9 +106,9 @@ namespace _201COS_Game
             this.LblLives.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblLives.Location = new System.Drawing.Point(605, 11);
             this.LblLives.Name = "LblLives";
-            this.LblLives.Size = new System.Drawing.Size(20, 22);
+            this.LblLives.Size = new System.Drawing.Size(30, 22);
             this.LblLives.TabIndex = 6;
-            this.LblLives.Text = "5";
+            this.LblLives.Text = "10";
             // 
             // TmrPlayer
             // 
@@ -118,6 +121,41 @@ namespace _201COS_Game
             this.TmrGun.Enabled = true;
             this.TmrGun.Interval = 50;
             this.TmrGun.Tick += new System.EventHandler(this.TmrGun_Tick);
+            // 
+            // TmrEnemySpawn
+            // 
+            this.TmrEnemySpawn.Enabled = true;
+            this.TmrEnemySpawn.Interval = 1000;
+            this.TmrEnemySpawn.Tick += new System.EventHandler(this.TmrEnemySpawn_Tick);
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.BackColor = System.Drawing.SystemColors.Control;
+            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime.Location = new System.Drawing.Point(306, 12);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(20, 22);
+            this.lblTime.TabIndex = 8;
+            this.lblTime.Text = "0";
+            // 
+            // TextTime
+            // 
+            this.TextTime.AutoSize = true;
+            this.TextTime.BackColor = System.Drawing.Color.Transparent;
+            this.TextTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TextTime.ForeColor = System.Drawing.Color.White;
+            this.TextTime.Location = new System.Drawing.Point(245, 12);
+            this.TextTime.Name = "TextTime";
+            this.TextTime.Size = new System.Drawing.Size(55, 22);
+            this.TextTime.TabIndex = 7;
+            this.TextTime.Text = "Time:";
+            // 
+            // TmrTime
+            // 
+            this.TmrTime.Enabled = true;
+            this.TmrTime.Interval = 1000;
+            this.TmrTime.Tick += new System.EventHandler(this.TmrTime_Tick);
             // 
             // PnlGame
             // 
@@ -132,18 +170,14 @@ namespace _201COS_Game
             this.PnlGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseMove);
             this.PnlGame.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseUp);
             // 
-            // TmrAlienSpawn
-            // 
-            this.TmrAlienSpawn.Enabled = true;
-            this.TmrAlienSpawn.Interval = 1000;
-            this.TmrAlienSpawn.Tick += new System.EventHandler(this.TmrAlienSpawn_Tick);
-            // 
             // FrmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(684, 564);
+            this.Controls.Add(this.lblTime);
+            this.Controls.Add(this.TextTime);
             this.Controls.Add(this.LblLives);
             this.Controls.Add(this.TextLives);
             this.Controls.Add(this.LblScore);
@@ -176,7 +210,10 @@ namespace _201COS_Game
         private System.Windows.Forms.Label LblLives;
         private System.Windows.Forms.Timer TmrPlayer;
         private System.Windows.Forms.Timer TmrGun;
-        private System.Windows.Forms.Timer TmrAlienSpawn;
+        private System.Windows.Forms.Timer TmrEnemySpawn;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Label TextTime;
+        private System.Windows.Forms.Timer TmrTime;
     }
 }
 

@@ -40,7 +40,7 @@ namespace _201COS_Game
             //https://en.wikipedia.org/wiki/Radian
             float convertToDeg = (float)(180 / Math.PI);
 
-            angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y, PicPlayerPlane.X) * convertToDeg);
+            angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y - 10, PicPlayerPlane.X - 10) * convertToDeg);
 
             Bitmap calcBitmap = new Bitmap(_Image, 100, 100);
 
