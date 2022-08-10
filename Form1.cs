@@ -24,6 +24,7 @@ namespace _201COS_Game
         List<Bullet> bullets = new List<Bullet>();
         List<Alien> aliens = new List<Alien>();
         List<Bomber> bombers = new List<Bomber>();
+        List<Bomb> bombs = new List<Bomb>();
 
 
         public FrmGame()
@@ -66,8 +67,10 @@ namespace _201COS_Game
                     {
                         bullets.Remove(b);
                         aliens.Remove(a);
+                        lives++;
                         score++;
                         LblScore.Text = score.ToString();
+                        LblLives.Text = lives.ToString();
                         break;
                     }
                     
@@ -153,6 +156,16 @@ namespace _201COS_Game
             {
                 t.moveBomber();
                 t.drawBomber(g);
+
+                if (t.bomberY >= 235 && t.bomberY <= 255)
+                {
+                    bombs.Add(new Bomb(t.leftOrRight));
+                }
+            }
+
+            foreach (Bomb d in bombs.ToList())
+            {
+                d.drawBomb(g);
             }
         }
 
@@ -162,8 +175,6 @@ namespace _201COS_Game
            if (e.KeyData == Keys.A) { left = true; }
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
-
-           if (e.KeyData == Keys.G) { MessageBox.Show(player.x.ToString(), player.y.ToString()); }
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {

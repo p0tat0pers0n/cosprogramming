@@ -10,8 +10,8 @@ namespace _201COS_Game
 {
     class Bomber
     {
-        Random spawnSide, spawnChance;
-        int bomberX, bomberY, width, height;
+        public Random spawnSide;
+        public int bomberX, bomberY, width, height, leftOrRight;
         public Rectangle bomberRec;
         public Image bomberImg;
         public Matrix matrixBomber;
@@ -24,26 +24,29 @@ namespace _201COS_Game
             bomberY = 490;
             spawnSide = new Random();
             bomberImg = Properties.Resources.taiFighter;
-            bomberRec = new Rectangle(bomberX, bomberY, bomberX, bomberY);
+            bomberRec = new Rectangle(bomberX, bomberY, width, height);
             spawnBomber();
         }
 
         public void spawnBomber()
         {
+            leftOrRight = spawnSide.Next(1, 3);
             // Spawns the bomber
-            if (spawnSide.Next(1,2) == 1 )
+            if ( leftOrRight == 1 )
             {
-                bomberX = 150;
+                bomberX = 100;
             }
-            if (spawnSide.Next(1, 2) == 2)
+            if ( leftOrRight == 2)
             {
-                bomberX = 450;
+                bomberX = 500;
             }
+            bomberRec.Location = new Point(bomberX, bomberY);
         }
 
         public void moveBomber()
         {
-            bomberY -= 5;
+            bomberY -= 7;
+            bomberRec.Location = new Point(bomberX, bomberY);
         }
 
         public void drawBomber(Graphics g)

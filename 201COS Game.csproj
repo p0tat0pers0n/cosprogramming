@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Alien.cs" />
     <Compile Include="Bomber.cs" />
+    <Compile Include="Bomb.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -124,6 +125,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\IMG_4920.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IMG_4918.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IMG_4925.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
