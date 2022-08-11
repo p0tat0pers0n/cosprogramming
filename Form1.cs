@@ -16,7 +16,7 @@ namespace _201COS_Game
     public partial class FrmGame : Form
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
-        bool up, down, left, right, endGame;
+        bool up, down, left, right, endGame, gameState;
         int mouseX, mouseY, score, timeElapsed, lives;
         Player player = new Player();
         Random spawnChance = new Random();
@@ -31,6 +31,8 @@ namespace _201COS_Game
         {
             InitializeComponent();
             lives = 10;
+            gameState = false;
+            MnuPause.Enabled = false;
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
         }
 
@@ -82,9 +84,44 @@ namespace _201COS_Game
                     {
                         bullets.Remove(b);
                     }
-
                 }
             }
+        }
+
+        private void MnuStart_Click(object sender, EventArgs e)
+        {
+            if (TxtName.Text.Count() > 3 && TxtName.Text != "Please input your name")
+            {
+                if (!gameState)
+                {
+                    TmrEnemySpawn.Enabled = true;
+                    TmrGun.Enabled = true;
+                    TmrPlayer.Enabled = true;
+                    TmrTime.Enabled = true;
+                }
+                MnuStart.Enabled = false;
+                MnuPause.Enabled = true;
+                gameState = true;
+                TxtName.Enabled = false;
+            }else
+            {
+                MessageBox.Show("Please enter a name", "oops");
+            }
+        }
+
+        private void MnuPause_Click(object sender, EventArgs e)
+        {
+            if (gameState)
+            {
+                TmrEnemySpawn.Enabled = false;
+                TmrGun.Enabled = false;
+                TmrPlayer.Enabled = false;
+                TmrTime.Enabled = false;
+            }
+            MnuPause.Enabled = false;
+            MnuStart.Enabled = true;
+            gameState = false;
+            TxtName.Enabled = true;
         }
 
         private void PnlGame_MouseDown(object sender, MouseEventArgs e)
@@ -100,6 +137,7 @@ namespace _201COS_Game
         {
             timeElapsed++;
             lblTime.Text = timeElapsed.ToString();
+            TmrEnemySpawn.Interval = 1000 - timeElapsed * 2;
         }
 
         private void TmrEnemySpawn_Tick(object sender, EventArgs e)
@@ -157,7 +195,7 @@ namespace _201COS_Game
                 t.moveBomber();
                 t.drawBomber(g);
 
-                if (t.bomberY >= 235 && t.bomberY <= 255)
+                if (t.bomberY >= 225 && t.bomberY <= 245)
                 {
                     bombs.Add(new Bomb(t.leftOrRight));
                 }
@@ -166,6 +204,19 @@ namespace _201COS_Game
             foreach (Bomb d in bombs.ToList())
             {
                 d.drawBomb(g);
+                d.countBombTime();
+                if (d.bombTimer >= 77)
+                {
+                    bombs.Remove(d);
+                }
+
+                foreach (Alien a in aliens.ToList())
+                {
+                    if (d.bombRec.IntersectsWith(a.alienRec) && d.bombTimer >= 66)
+                    {
+                        aliens.Remove(a);
+                    }
+                }
             }
         }
 
@@ -175,6 +226,8 @@ namespace _201COS_Game
            if (e.KeyData == Keys.A) { left = true; }
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
+
+           if (e.KeyData == Keys.G) { lives = 500; LblLives.Text = lives.ToString(); }
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {

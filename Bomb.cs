@@ -10,7 +10,7 @@ namespace _201COS_Game
 {
     class Bomb
     {
-        int bombTimer, bombX, bombY, width, height, bomberSpawnSide;
+        public int bombTimer, bombX, bombY, width, height, bomberSpawnSide;
         public Rectangle bombRec;
         public Image bombImg;
         public Matrix matrixBomb;
@@ -40,18 +40,34 @@ namespace _201COS_Game
             bombRec.Location = new Point(bombX, bombY);
         }
 
-        public void drawBomb(Graphics g)
+        public void countBombTime()
         {
-            //centre bullet 
-            centreBomb = new Point(bombX, bombY);
-            //instantiate a Matrix object called matrixBomber
-            matrixBomb = new Matrix();
-            //rotate the matrix (in this case bulletRec) about its centre
-            matrixBomb.RotateAt(0, centreBomb);
-            //Set the current draw location to the rotated matrix point i.e. where alienRec is now
-            g.Transform = matrixBomb;
-            //Draw the bullet
-            g.DrawImage(bombImg, bombRec);
+            bombTimer++;
+            if (bombTimer >= 66)
+            {
+                bombImg = Properties.Resources.explosion;
+                bombRec = new Rectangle(bombX, bombY, 150, 150);
+            }
+        }
+
+        public void drawBomb(Graphics g)
+        {   
+            if (bombTimer < 66)
+            {
+                //centre bullet 
+                centreBomb = new Point(bombX, bombY);
+                //instantiate a Matrix object called matrixBomber
+                matrixBomb = new Matrix();
+                //rotate the matrix (in this case bulletRec) about its centre
+                matrixBomb.RotateAt(0, centreBomb);
+                //Set the current draw location to the rotated matrix point i.e. where alienRec is now
+                g.Transform = matrixBomb;
+                //Draw the bullet
+            }
+            if (bombTimer < 76)
+            {
+                g.DrawImage(bombImg, bombRec);
+            }
         }
     }
 }

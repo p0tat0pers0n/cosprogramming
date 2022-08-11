@@ -43,6 +43,10 @@ namespace _201COS_Game
             this.TextTime = new System.Windows.Forms.Label();
             this.TmrTime = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.MnuStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPause = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // TextName
@@ -50,7 +54,7 @@ namespace _201COS_Game
             this.TextName.AutoSize = true;
             this.TextName.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TextName.ForeColor = System.Drawing.Color.White;
-            this.TextName.Location = new System.Drawing.Point(12, 9);
+            this.TextName.Location = new System.Drawing.Point(12, 34);
             this.TextName.Name = "TextName";
             this.TextName.Size = new System.Drawing.Size(62, 22);
             this.TextName.TabIndex = 1;
@@ -58,8 +62,7 @@ namespace _201COS_Game
             // 
             // TxtName
             // 
-            this.TxtName.Enabled = false;
-            this.TxtName.Location = new System.Drawing.Point(90, 12);
+            this.TxtName.Location = new System.Drawing.Point(90, 37);
             this.TxtName.Name = "TxtName";
             this.TxtName.Size = new System.Drawing.Size(117, 20);
             this.TxtName.TabIndex = 2;
@@ -71,7 +74,7 @@ namespace _201COS_Game
             this.TextScore.BackColor = System.Drawing.Color.Transparent;
             this.TextScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TextScore.ForeColor = System.Drawing.Color.White;
-            this.TextScore.Location = new System.Drawing.Point(410, 9);
+            this.TextScore.Location = new System.Drawing.Point(381, 34);
             this.TextScore.Name = "TextScore";
             this.TextScore.Size = new System.Drawing.Size(62, 22);
             this.TextScore.TabIndex = 3;
@@ -82,7 +85,7 @@ namespace _201COS_Game
             this.LblScore.AutoSize = true;
             this.LblScore.BackColor = System.Drawing.SystemColors.Control;
             this.LblScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblScore.Location = new System.Drawing.Point(478, 11);
+            this.LblScore.Location = new System.Drawing.Point(449, 36);
             this.LblScore.Name = "LblScore";
             this.LblScore.Size = new System.Drawing.Size(20, 22);
             this.LblScore.TabIndex = 4;
@@ -93,7 +96,7 @@ namespace _201COS_Game
             this.TextLives.AutoSize = true;
             this.TextLives.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TextLives.ForeColor = System.Drawing.Color.White;
-            this.TextLives.Location = new System.Drawing.Point(542, 11);
+            this.TextLives.Location = new System.Drawing.Point(530, 34);
             this.TextLives.Name = "TextLives";
             this.TextLives.Size = new System.Drawing.Size(57, 22);
             this.TextLives.TabIndex = 5;
@@ -104,7 +107,7 @@ namespace _201COS_Game
             this.LblLives.AutoSize = true;
             this.LblLives.BackColor = System.Drawing.SystemColors.Control;
             this.LblLives.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblLives.Location = new System.Drawing.Point(605, 11);
+            this.LblLives.Location = new System.Drawing.Point(593, 34);
             this.LblLives.Name = "LblLives";
             this.LblLives.Size = new System.Drawing.Size(30, 22);
             this.LblLives.TabIndex = 6;
@@ -112,19 +115,16 @@ namespace _201COS_Game
             // 
             // TmrPlayer
             // 
-            this.TmrPlayer.Enabled = true;
             this.TmrPlayer.Interval = 15;
             this.TmrPlayer.Tick += new System.EventHandler(this.TmrPlayer_Tick);
             // 
             // TmrGun
             // 
-            this.TmrGun.Enabled = true;
             this.TmrGun.Interval = 50;
             this.TmrGun.Tick += new System.EventHandler(this.TmrGun_Tick);
             // 
             // TmrEnemySpawn
             // 
-            this.TmrEnemySpawn.Enabled = true;
             this.TmrEnemySpawn.Interval = 1000;
             this.TmrEnemySpawn.Tick += new System.EventHandler(this.TmrEnemySpawn_Tick);
             // 
@@ -133,7 +133,7 @@ namespace _201COS_Game
             this.lblTime.AutoSize = true;
             this.lblTime.BackColor = System.Drawing.SystemColors.Control;
             this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(306, 12);
+            this.lblTime.Location = new System.Drawing.Point(298, 35);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(20, 22);
             this.lblTime.TabIndex = 8;
@@ -145,7 +145,7 @@ namespace _201COS_Game
             this.TextTime.BackColor = System.Drawing.Color.Transparent;
             this.TextTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TextTime.ForeColor = System.Drawing.Color.White;
-            this.TextTime.Location = new System.Drawing.Point(245, 12);
+            this.TextTime.Location = new System.Drawing.Point(237, 35);
             this.TextTime.Name = "TextTime";
             this.TextTime.Size = new System.Drawing.Size(55, 22);
             this.TextTime.TabIndex = 7;
@@ -153,7 +153,6 @@ namespace _201COS_Game
             // 
             // TmrTime
             // 
-            this.TmrTime.Enabled = true;
             this.TmrTime.Interval = 1000;
             this.TmrTime.Tick += new System.EventHandler(this.TmrTime_Tick);
             // 
@@ -170,6 +169,31 @@ namespace _201COS_Game
             this.PnlGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseMove);
             this.PnlGame.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseUp);
             // 
+            // menuStrip
+            // 
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MnuStart,
+            this.MnuPause});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(684, 24);
+            this.menuStrip.TabIndex = 9;
+            this.menuStrip.Text = "menuStrip";
+            // 
+            // MnuStart
+            // 
+            this.MnuStart.Name = "MnuStart";
+            this.MnuStart.Size = new System.Drawing.Size(43, 20);
+            this.MnuStart.Text = "Start";
+            this.MnuStart.Click += new System.EventHandler(this.MnuStart_Click);
+            // 
+            // MnuPause
+            // 
+            this.MnuPause.Name = "MnuPause";
+            this.MnuPause.Size = new System.Drawing.Size(50, 20);
+            this.MnuPause.Text = "Pause";
+            this.MnuPause.Click += new System.EventHandler(this.MnuPause_Click);
+            // 
             // FrmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -185,15 +209,19 @@ namespace _201COS_Game
             this.Controls.Add(this.TxtName);
             this.Controls.Add(this.TextName);
             this.Controls.Add(this.PnlGame);
+            this.Controls.Add(this.menuStrip);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.Name = "FrmGame";
             this.Text = "Angry Nerds";
             this.Load += new System.EventHandler(this.FrmGame_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -214,6 +242,9 @@ namespace _201COS_Game
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Label TextTime;
         private System.Windows.Forms.Timer TmrTime;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem MnuStart;
+        private System.Windows.Forms.ToolStripMenuItem MnuPause;
     }
 }
 
