@@ -46,6 +46,7 @@ namespace _201COS_Game
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.MnuStart = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuPause = new System.Windows.Forms.ToolStripMenuItem();
+            this.TmrPowerUp = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -194,6 +195,12 @@ namespace _201COS_Game
             this.MnuPause.Text = "Pause";
             this.MnuPause.Click += new System.EventHandler(this.MnuPause_Click);
             // 
+            // TmrPowerUp
+            // 
+            this.TmrPowerUp.Enabled = true;
+            this.TmrPowerUp.Interval = 1000;
+            this.TmrPowerUp.Tick += new System.EventHandler(this.TmrPowerUp_Tick);
+            // 
             // FrmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -245,6 +252,7 @@ namespace _201COS_Game
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem MnuStart;
         private System.Windows.Forms.ToolStripMenuItem MnuPause;
+        private System.Windows.Forms.Timer TmrPowerUp;
     }
 }
 

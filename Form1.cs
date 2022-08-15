@@ -16,16 +16,18 @@ namespace _201COS_Game
     public partial class FrmGame : Form
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
-        bool up, down, left, right, endGame, gameState;
-        int mouseX, mouseY, score, timeElapsed, lives;
+        bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState;
+        int mouseX, mouseY, score, timeElapsed, lives, powerUpTime;
         Player player = new Player();
-        Random spawnChance = new Random();
+        Random bomberChance = new Random();
+        Random starChance = new Random();
+
         Rectangle PlayerRec = new Rectangle();
         List<Bullet> bullets = new List<Bullet>();
         List<Alien> aliens = new List<Alien>();
         List<Bomber> bombers = new List<Bomber>();
         List<Bomb> bombs = new List<Bomb>();
-
+        List<ShootingStar> stars = new List<ShootingStar>();
 
         public FrmGame()
         {
@@ -58,8 +60,22 @@ namespace _201COS_Game
             PlayerRec = new Rectangle(278, 210, 100, 100);
         }
 
+        private void TmrPowerUp_Tick(object sender, EventArgs e)
+        {
+            powerUpTime++;
+            if (powerUpTime == 10)
+            {
+                powerUpStatus = false;
+                TmrPowerUp.Enabled = false;
+            }
+        }
+
         private void TmrGun_Tick(object sender, EventArgs e)
         {
+            if (mouseState && powerUpStatus)
+            {
+                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
+            }
             foreach (Bullet b in bullets.ToList())
             {
 
@@ -127,25 +143,37 @@ namespace _201COS_Game
         private void PnlGame_MouseDown(object sender, MouseEventArgs e)
         {
             bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
+            if (powerUpStatus)
+            {
+                mouseState = true;
+            }
         }
 
         private void PnlGame_MouseUp(object sender, MouseEventArgs e)
         {
+            mouseState = false;
         }
 
         private void TmrTime_Tick(object sender, EventArgs e)
         {
             timeElapsed++;
             lblTime.Text = timeElapsed.ToString();
-            TmrEnemySpawn.Interval = 1000 - timeElapsed * 2;
+            if (TmrEnemySpawn.Interval > 110)
+            {
+                TmrEnemySpawn.Interval = 1000 - (int)(timeElapsed * 2.5);
+            }
         }
 
         private void TmrEnemySpawn_Tick(object sender, EventArgs e)
         {
             aliens.Add(new Alien());
-            if (spawnChance.Next(1, 10) == 1)
+            if (bomberChance.Next(1, 10) == 1)
             {
                 bombers.Add(new Bomber());
+            }
+            if (starChance.Next(1, 20) == 3)
+            {
+                stars.Add(new ShootingStar());
             }
         }
 
@@ -163,6 +191,28 @@ namespace _201COS_Game
             {
                 b.draw(g);
                 b.moveBullet();
+            }
+
+            foreach (ShootingStar s in stars.ToList())
+            {
+                s.drawStar(g);
+                s.moveStar();
+                if (PlayerRec.IntersectsWith(s.starRec))
+                {
+                    stars.Remove(s);
+                    powerUpStatus = true;
+                    TmrPowerUp.Enabled = true;
+                    powerUpTime = 0;
+                }
+
+                if (s.starRec.Location.X > 660 || s.starRec.Location.X < 0)
+                {
+                    stars.Remove(s);
+                }
+                if (s.starRec.Location.Y > 490 || s.starRec.Location.Y < 0)
+                {
+                    stars.Remove(s);
+                }
             }
 
             foreach (Alien a in aliens.ToList())

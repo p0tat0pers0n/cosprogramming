@@ -41,7 +41,6 @@ namespace _201COS_Game
             if (side == 1)
             {
                 //spawns on top going down
-                alienImg = Properties.Resources.one;
                 alienX = xSpawn;
                 alienY = 10;
                 alienRec.Location = new Point(xSpawn, 10);
@@ -49,7 +48,6 @@ namespace _201COS_Game
             if (side == 2)
             {
                 //spawns on right going left
-                alienImg = Properties.Resources.two;
                 alienX = 650;
                 alienY = ySpawn;
                 alienRec.Location = new Point(650, ySpawn);
@@ -57,7 +55,6 @@ namespace _201COS_Game
             if (side == 3)
             {
                 //spawns on bottom going up
-                alienImg = Properties.Resources.three;
                 alienX = xSpawn;
                 alienY = 450;
                 alienRec.Location = new Point(xSpawn, 450);
@@ -65,7 +62,6 @@ namespace _201COS_Game
             if (side == 4)
             {
                 //spawns on left going right
-                alienImg = Properties.Resources.four;
                 alienX = 10;
                 alienY = ySpawn;
                 alienRec.Location = new Point(10, ySpawn);

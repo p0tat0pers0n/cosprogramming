@@ -103,16 +103,6 @@ namespace _201COS_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap comet {
-            get {
-                object obj = ResourceManager.GetObject("comet", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap explosion {
             get {
                 object obj = ResourceManager.GetObject("explosion", resourceCulture);
@@ -156,6 +146,16 @@ namespace _201COS_Game.Properties {
         internal static System.Drawing.Bitmap player2 {
             get {
                 object obj = ResourceManager.GetObject("player2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shootingStar {
+            get {
+                object obj = ResourceManager.GetObject("shootingStar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
