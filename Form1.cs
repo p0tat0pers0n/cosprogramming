@@ -18,9 +18,12 @@ namespace _201COS_Game
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState;
         int mouseX, mouseY, score, timeElapsed, lives, powerUpTime;
+        string filePath, fileName, pathString;
         Player player = new Player();
         Random bomberChance = new Random();
         Random starChance = new Random();
+        Rectangle powerUpRec;
+        Image powerUpImg;
 
         Rectangle PlayerRec = new Rectangle();
         List<Bullet> bullets = new List<Bullet>();
@@ -35,6 +38,13 @@ namespace _201COS_Game
             lives = 10;
             gameState = false;
             MnuPause.Enabled = false;
+            filePath = @"C:\Desktop";
+            fileName = "textsavefile";
+            pathString = System.IO.Path.Combine(filePath, fileName);
+
+            powerUpImg = Properties.Resources.fireyfirearm;
+            powerUpRec = new Rectangle(ClientSize.Width - 100, ClientSize.Height - 150, 75, 75);
+
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
         }
 
@@ -45,6 +55,19 @@ namespace _201COS_Game
             TmrPlayer.Enabled = false;
             TmrTime.Enabled = false;
             MessageBox.Show("You lost\nWith a time of: " + timeElapsed.ToString() + " seconds\nAnd " + score.ToString() + " kills", "Game End");
+
+            //High score saving
+
+            if (!System.IO.File.Exists(pathString))
+            {
+                using (System.IO.FileStream fs = System.IO.File.Create(pathString))
+                {
+                    for (byte i = 0; i < 100; i++)
+                    {
+                        fs.WriteByte(i);
+                    }
+                }
+            }
         }
 
         private void FrmGame_KeyUp(object sender, KeyEventArgs e)
@@ -187,6 +210,11 @@ namespace _201COS_Game
             g = e.Graphics;
             player.MoveRotatePlayer(mouseX, mouseY, PlayerRec, g, up, down, left, right);
 
+            if (powerUpStatus)
+            {
+                g.DrawImage(powerUpImg, powerUpRec);
+            }
+
             foreach (Bullet b in bullets)
             {
                 b.draw(g);
@@ -197,12 +225,12 @@ namespace _201COS_Game
             {
                 s.drawStar(g);
                 s.moveStar();
-                if (PlayerRec.IntersectsWith(s.starRec))
+                if (player.playerRec.IntersectsWith(s.starRec))
                 {
                     stars.Remove(s);
+                    powerUpTime = 0;
                     powerUpStatus = true;
                     TmrPowerUp.Enabled = true;
-                    powerUpTime = 0;
                 }
 
                 if (s.starRec.Location.X > 660 || s.starRec.Location.X < 0)

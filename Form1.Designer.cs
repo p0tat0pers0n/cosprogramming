@@ -46,6 +46,7 @@ namespace _201COS_Game
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.MnuStart = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuPause = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuHighScore = new System.Windows.Forms.ToolStripMenuItem();
             this.TmrPowerUp = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -174,7 +175,8 @@ namespace _201COS_Game
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MnuStart,
-            this.MnuPause});
+            this.MnuPause,
+            this.MnuHighScore});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(684, 24);
@@ -194,6 +196,12 @@ namespace _201COS_Game
             this.MnuPause.Size = new System.Drawing.Size(50, 20);
             this.MnuPause.Text = "Pause";
             this.MnuPause.Click += new System.EventHandler(this.MnuPause_Click);
+            // 
+            // MnuHighScore
+            // 
+            this.MnuHighScore.Name = "MnuHighScore";
+            this.MnuHighScore.Size = new System.Drawing.Size(85, 20);
+            this.MnuHighScore.Text = "Highscore: 0";
             // 
             // TmrPowerUp
             // 
@@ -253,6 +261,7 @@ namespace _201COS_Game
         private System.Windows.Forms.ToolStripMenuItem MnuStart;
         private System.Windows.Forms.ToolStripMenuItem MnuPause;
         private System.Windows.Forms.Timer TmrPowerUp;
+        private System.Windows.Forms.ToolStripMenuItem MnuHighScore;
     }
 }
 

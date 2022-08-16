@@ -113,6 +113,16 @@ namespace _201COS_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fireyfirearm {
+            get {
+                object obj = ResourceManager.GetObject("fireyfirearm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap four {
             get {
                 object obj = ResourceManager.GetObject("four", resourceCulture);

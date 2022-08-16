@@ -16,6 +16,7 @@ namespace _201COS_Game
         public int x, y;
         Bitmap PlayerImg;
         public float angleCalc;
+        public Rectangle playerRec;
 
         //Create a constructor (initialises the values of the fields)
         public Player()
@@ -28,6 +29,7 @@ namespace _201COS_Game
             if (down) { y += 5; }
             if (left) { x -= 5; }
             if (right) { x += 5; }
+            playerRec = PlayerRec;
 
             PlayerRec.Location = new Point(x, y);
 
