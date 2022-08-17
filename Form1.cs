@@ -38,8 +38,8 @@ namespace _201COS_Game
             lives = 10;
             gameState = false;
             MnuPause.Enabled = false;
-            filePath = @"C:\Desktop";
-            fileName = "textsavefile";
+            filePath = @"H:\";
+            fileName = "textsavefile.txt";
             pathString = System.IO.Path.Combine(filePath, fileName);
 
             powerUpImg = Properties.Resources.fireyfirearm;
@@ -56,16 +56,19 @@ namespace _201COS_Game
             TmrTime.Enabled = false;
             MessageBox.Show("You lost\nWith a time of: " + timeElapsed.ToString() + " seconds\nAnd " + score.ToString() + " kills", "Game End");
 
-            //High score saving
+            string[] saveData = { timeElapsed.ToString() + score.ToString() };
+            byte[] rawSaveData = new byte [saveData.Length*2];
+            for (int i = 0; i < saveData.Length; i++)
+            {
+                rawSaveData[i] = Byte.Parse(saveData[i]);
+            } 
 
+            //High score saving
             if (!System.IO.File.Exists(pathString))
             {
                 using (System.IO.FileStream fs = System.IO.File.Create(pathString))
                 {
-                    for (byte i = 0; i < 100; i++)
-                    {
-                        fs.WriteByte(i);
-                    }
+                    fs.Write(rawSaveData, 0, 0);
                 }
             }
         }
@@ -305,7 +308,7 @@ namespace _201COS_Game
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
 
-           if (e.KeyData == Keys.G) { lives = 500; LblLives.Text = lives.ToString(); }
+           if (e.KeyData == Keys.G) { LostGame(); }
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
