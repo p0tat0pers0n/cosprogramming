@@ -10,15 +10,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows.Forms;
+using System.IO;
 
 namespace _201COS_Game
 {
     public partial class FrmGame : Form
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
-        bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState;
+        bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState, highscoreAchieved;
         int mouseX, mouseY, score, timeElapsed, lives, powerUpTime;
-        string filePath, fileName, pathString;
+        string filePath, fileName, pathString, playerName;
         Player player = new Player();
         Random bomberChance = new Random();
         Random starChance = new Random();
@@ -44,6 +45,7 @@ namespace _201COS_Game
 
             powerUpImg = Properties.Resources.fireyfirearm;
             powerUpRec = new Rectangle(ClientSize.Width - 100, ClientSize.Height - 150, 75, 75);
+            playerName = TxtName.Text;
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
         }
@@ -56,19 +58,17 @@ namespace _201COS_Game
             TmrTime.Enabled = false;
             MessageBox.Show("You lost\nWith a time of: " + timeElapsed.ToString() + " seconds\nAnd " + score.ToString() + " kills", "Game End");
 
-            string[] saveData = { timeElapsed.ToString() + score.ToString() };
-            byte[] rawSaveData = new byte [saveData.Length*2];
-            for (int i = 0; i < saveData.Length; i++)
+            if (score != 0)
             {
-                rawSaveData[i] = Byte.Parse(saveData[i]);
-            } 
+                string[] oldSaveData = System.IO.File.ReadAllLines(pathString);
 
-            //High score saving
-            if (!System.IO.File.Exists(pathString))
-            {
-                using (System.IO.FileStream fs = System.IO.File.Create(pathString))
+                string[] saveData = { playerName, timeElapsed.ToString(), score.ToString() };
+
+                //Checks if the score is greater than before
+                if (Int32.Parse(oldSaveData[2]) < Int32.Parse(saveData[2]))
                 {
-                    fs.Write(rawSaveData, 0, 0);
+                    //High score saving
+                    File.WriteAllLines(pathString, saveData);
                 }
             }
         }
