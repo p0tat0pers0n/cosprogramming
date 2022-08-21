@@ -11,13 +11,14 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace _201COS_Game
 {
     public partial class FrmGame : Form
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
-        bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState, highscoreAchieved;
+        bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState;
         int mouseX, mouseY, score, timeElapsed, lives, powerUpTime;
         string filePath, fileName, pathString, playerName;
         Player player = new Player();
@@ -40,14 +41,35 @@ namespace _201COS_Game
             gameState = false;
             MnuPause.Enabled = false;
             filePath = @"H:\";
-            fileName = "textsavefile.txt";
+            fileName = "angrynerdssave.txt";
             pathString = System.IO.Path.Combine(filePath, fileName);
 
             powerUpImg = Properties.Resources.fireyfirearm;
             powerUpRec = new Rectangle(ClientSize.Width - 100, ClientSize.Height - 150, 75, 75);
-            playerName = TxtName.Text;
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
+
+            //displays highscore on menubar
+            if (File.Exists(pathString))
+            {
+                string[] saveFileData = System.IO.File.ReadAllLines(pathString);
+                MnuHighScore.Text = "Highscore: " + saveFileData[2];
+            }
+        }
+
+        private void MnuHighScore_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(pathString))
+            {
+                string[] resetSaveData = { "null", "0", "0" };
+                DialogResult result;
+                result = MessageBox.Show("Would you like to reset your save file?", "IMPORTANT", MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    File.WriteAllLines(pathString, resetSaveData);
+                    MnuHighScore.Text = "Highscore: 0";
+                }
+            }
         }
 
         public void LostGame()
@@ -60,17 +82,24 @@ namespace _201COS_Game
 
             if (score != 0)
             {
-                string[] oldSaveData = System.IO.File.ReadAllLines(pathString);
-
                 string[] saveData = { playerName, timeElapsed.ToString(), score.ToString() };
-
-                //Checks if the score is greater than before
-                if (Int32.Parse(oldSaveData[2]) < Int32.Parse(saveData[2]))
+                if (File.Exists(pathString))
                 {
-                    //High score saving
+                    string[] oldSaveData = System.IO.File.ReadAllLines(pathString);
+
+                    //Checks if the score is greater than before
+                    if (Convert.ToInt32(oldSaveData[2]) < Convert.ToInt32(saveData[2]))
+                    {
+                        //High score saving
+                        File.WriteAllLines(pathString, saveData);
+                        MessageBox.Show("Congratulations!\nYou've gotten a new highscore of: " + score.ToString() + " kills in " + timeElapsed.ToString() + " seconds", "New Highscore!");
+                    }
+                }else
+                {
                     File.WriteAllLines(pathString, saveData);
                 }
             }
+            Application.Exit();
         }
 
         private void FrmGame_KeyUp(object sender, KeyEventArgs e)
@@ -132,22 +161,26 @@ namespace _201COS_Game
 
         private void MnuStart_Click(object sender, EventArgs e)
         {
-            if (TxtName.Text.Count() > 3 && TxtName.Text != "Please input your name")
+            playerName = TxtName.Text;
+            if (Regex.IsMatch(playerName, @"^[a-zA-Z]+$"))
             {
-                if (!gameState)
+                if (TxtName.Text.Count() > 3 && TxtName.Text != "Please input your name")
                 {
-                    TmrEnemySpawn.Enabled = true;
-                    TmrGun.Enabled = true;
-                    TmrPlayer.Enabled = true;
-                    TmrTime.Enabled = true;
+                    if (!gameState)
+                    {
+                        TmrEnemySpawn.Enabled = true;
+                        TmrGun.Enabled = true;
+                        TmrPlayer.Enabled = true;
+                        TmrTime.Enabled = true;
+                    }
+                    MnuStart.Enabled = false;
+                    MnuPause.Enabled = true;
+                    gameState = true;
+                    TxtName.Enabled = false;
                 }
-                MnuStart.Enabled = false;
-                MnuPause.Enabled = true;
-                gameState = true;
-                TxtName.Enabled = false;
             }else
             {
-                MessageBox.Show("Please enter a name", "oops");
+                MessageBox.Show("Please enter a name\nWith only letters", "oops");
             }
         }
 

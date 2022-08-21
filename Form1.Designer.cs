@@ -202,6 +202,7 @@ namespace _201COS_Game
             this.MnuHighScore.Name = "MnuHighScore";
             this.MnuHighScore.Size = new System.Drawing.Size(85, 20);
             this.MnuHighScore.Text = "Highscore: 0";
+            this.MnuHighScore.Click += new System.EventHandler(this.MnuHighScore_Click);
             // 
             // TmrPowerUp
             // 
