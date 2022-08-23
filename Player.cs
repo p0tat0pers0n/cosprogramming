@@ -31,10 +31,10 @@ namespace _201COS_Game
             if (right) { x += 5; }
             playerRec = PlayerRec;
 
-            PlayerRec.Location = new Point(x, y);
+            playerRec.Location = new Point(x, y);
 
             //get the direction of the mouse by looking at the position of the picture box in relation to the mouse pointer
-            Vector2 PicPlayerPlane = new Vector2(mouseX - PlayerRec.Location.X, mouseY - PlayerRec.Location.Y);
+            Vector2 PicPlayerPlane = new Vector2(mouseX - playerRec.Location.X, mouseY - playerRec.Location.Y);
 
             //https://en.wikipedia.org/wiki/Atan2
             //atan2 - calculates the angle between the x axis and the ray line to a point. gt 0
@@ -48,7 +48,7 @@ namespace _201COS_Game
 
             //set picture box 2 to the rotated source image.
             PlayerImg = RotateImage(calcBitmap, angleCalc);
-            g.DrawImage(PlayerImg, PlayerRec);
+            g.DrawImage(PlayerImg, playerRec);
         }
 
         public Bitmap RotateImage(Bitmap calcBitMap, float angle)

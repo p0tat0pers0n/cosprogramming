@@ -341,7 +341,10 @@ namespace _201COS_Game
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
 
-           if (e.KeyData == Keys.G) { LostGame(); }
+           if (e.KeyData == Keys.G)
+            {
+                stars.Add(new ShootingStar());
+            }
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
