@@ -48,6 +48,7 @@ namespace _201COS_Game
             this.MnuPause = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuHighScore = new System.Windows.Forms.ToolStripMenuItem();
             this.TmrPowerUp = new System.Windows.Forms.Timer(this.components);
+            this.TmrSlowShoot = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -210,6 +211,12 @@ namespace _201COS_Game
             this.TmrPowerUp.Interval = 1000;
             this.TmrPowerUp.Tick += new System.EventHandler(this.TmrPowerUp_Tick);
             // 
+            // TmrSlowShoot
+            // 
+            this.TmrSlowShoot.Enabled = true;
+            this.TmrSlowShoot.Interval = 150;
+            this.TmrSlowShoot.Tick += new System.EventHandler(this.TmrSlowShoot_Tick);
+            // 
             // FrmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -263,6 +270,7 @@ namespace _201COS_Game
         private System.Windows.Forms.ToolStripMenuItem MnuPause;
         private System.Windows.Forms.Timer TmrPowerUp;
         private System.Windows.Forms.ToolStripMenuItem MnuHighScore;
+        private System.Windows.Forms.Timer TmrSlowShoot;
     }
 }
 

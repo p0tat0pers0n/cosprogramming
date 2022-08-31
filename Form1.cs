@@ -72,6 +72,14 @@ namespace _201COS_Game
             }
         }
 
+        private void TmrSlowShoot_Tick(object sender, EventArgs e)
+        {
+            if (mouseState && !powerUpStatus)
+            {
+                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
+            }
+        }
+
         public void LostGame()
         {
             TmrEnemySpawn.Enabled = false;
@@ -202,10 +210,7 @@ namespace _201COS_Game
         private void PnlGame_MouseDown(object sender, MouseEventArgs e)
         {
             bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
-            if (powerUpStatus)
-            {
-                mouseState = true;
-            }
+            mouseState = true;
         }
 
         private void PnlGame_MouseUp(object sender, MouseEventArgs e)
