@@ -11,6 +11,7 @@ namespace _201COS_Game
     class Bomb
     {
         public int bombTimer, bombX, bombY, width, height, bomberSpawnSide;
+        public bool bombGaveDamage;
         public Rectangle bombRec;
         public Image bombImg;
         public Matrix matrixBomb;
@@ -20,6 +21,7 @@ namespace _201COS_Game
             width = 75;
             height = 125;
             bombY = 245;
+            bombGaveDamage = false;
             bomberSpawnSide = leftOrRight;
             bombTimer = 0;
             bombImg = Properties.Resources.bomb;

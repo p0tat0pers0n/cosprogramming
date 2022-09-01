@@ -214,7 +214,7 @@ namespace _201COS_Game
             // TmrSlowShoot
             // 
             this.TmrSlowShoot.Enabled = true;
-            this.TmrSlowShoot.Interval = 150;
+            this.TmrSlowShoot.Interval = 200;
             this.TmrSlowShoot.Tick += new System.EventHandler(this.TmrSlowShoot_Tick);
             // 
             // FrmGame
@@ -240,6 +240,7 @@ namespace _201COS_Game
             this.MaximizeBox = false;
             this.Name = "FrmGame";
             this.Text = "Angry Nerds";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmGame_FormClosing);
             this.Load += new System.EventHandler(this.FrmGame_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);

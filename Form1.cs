@@ -19,7 +19,7 @@ namespace _201COS_Game
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState;
-        int mouseX, mouseY, score, timeElapsed, lives, powerUpTime;
+        int mouseX, mouseY, score, timeElapsed, lives, powerUpTime, mouseHeldTime;
         string filePath, fileName, pathString, playerName;
         Player player = new Player();
         Random bomberChance = new Random();
@@ -72,9 +72,14 @@ namespace _201COS_Game
             }
         }
 
+        private void FrmGame_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Environment.Exit(1);
+        }
+
         private void TmrSlowShoot_Tick(object sender, EventArgs e)
         {
-            if (mouseState && !powerUpStatus)
+            if (mouseState && !powerUpStatus && mouseHeldTime > 3)
             {
                 bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
             }
@@ -135,6 +140,10 @@ namespace _201COS_Game
 
         private void TmrGun_Tick(object sender, EventArgs e)
         {
+            if (mouseState)
+            {
+                mouseHeldTime++;
+            }
             if (mouseState && powerUpStatus)
             {
                 bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
@@ -148,10 +157,8 @@ namespace _201COS_Game
                     {
                         bullets.Remove(b);
                         aliens.Remove(a);
-                        lives++;
                         score++;
                         LblScore.Text = score.ToString();
-                        LblLives.Text = lives.ToString();
                         break;
                     }
                     
@@ -216,6 +223,7 @@ namespace _201COS_Game
         private void PnlGame_MouseUp(object sender, MouseEventArgs e)
         {
             mouseState = false;
+            mouseHeldTime = 0;
         }
 
         private void TmrTime_Tick(object sender, EventArgs e)
@@ -270,6 +278,7 @@ namespace _201COS_Game
                 {
                     stars.Remove(s);
                     powerUpTime = 0;
+                    lives++;
                     powerUpStatus = true;
                     TmrPowerUp.Enabled = true;
                 }
@@ -336,6 +345,12 @@ namespace _201COS_Game
                         aliens.Remove(a);
                     }
                 }
+
+                if (d.bombRec.IntersectsWith(player.playerRec) && d.bombTimer >= 66 && d.bombGaveDamage == false)
+                {
+                    d.bombGaveDamage = true;
+                    lives--;
+                }
             }
         }
 
@@ -345,11 +360,6 @@ namespace _201COS_Game
            if (e.KeyData == Keys.A) { left = true; }
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
-
-           if (e.KeyData == Keys.G)
-            {
-                stars.Add(new ShootingStar());
-            }
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
