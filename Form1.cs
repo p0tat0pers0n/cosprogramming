@@ -18,8 +18,8 @@ namespace _201COS_Game
     public partial class FrmGame : Form
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
-        bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState;
-        int mouseX, mouseY, score, timeElapsed, lives, powerUpTime, mouseHeldTime;
+        bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState, afkTimerCheck;
+        int mouseX, mouseY, score, timeElapsed, lives, powerUpTime, mouseHeldTime, afkTimer;
         string filePath, fileName, pathString, playerName;
         Player player = new Player();
         Random bomberChance = new Random();
@@ -38,6 +38,7 @@ namespace _201COS_Game
         {
             InitializeComponent();
             lives = 10;
+            afkTimer = 0;
             gameState = false;
             MnuPause.Enabled = false;
             filePath = @"H:\";
@@ -74,6 +75,7 @@ namespace _201COS_Game
 
         private void FrmGame_FormClosing(object sender, FormClosingEventArgs e)
         {
+            LostGame(true);
             System.Environment.Exit(1);
         }
 
@@ -85,13 +87,13 @@ namespace _201COS_Game
             }
         }
 
-        public void LostGame()
+        public void LostGame(bool onlyHighscore)
         {
             TmrEnemySpawn.Enabled = false;
             TmrGun.Enabled = false;
             TmrPlayer.Enabled = false;
             TmrTime.Enabled = false;
-            MessageBox.Show("You lost\nWith a time of: " + timeElapsed.ToString() + " seconds\nAnd " + score.ToString() + " kills", "Game End");
+            if (!onlyHighscore) { MessageBox.Show("You lost\nWith a time of: " + timeElapsed.ToString() + " seconds\nAnd " + score.ToString() + " kills", "Game End"); }
 
             if (score != 0)
             {
@@ -105,7 +107,7 @@ namespace _201COS_Game
                     {
                         //High score saving
                         File.WriteAllLines(pathString, saveData);
-                        MessageBox.Show("Congratulations!\nYou've gotten a new highscore of: " + score.ToString() + " kills in " + timeElapsed.ToString() + " seconds", "New Highscore!");
+                        if (!onlyHighscore) { MessageBox.Show("Congratulations!\nYou've gotten a new highscore of: " + score.ToString() + " kills in " + timeElapsed.ToString() + " seconds", "New Highscore!"); }
                     }
                 }else
                 {
@@ -121,6 +123,7 @@ namespace _201COS_Game
             if (e.KeyData == Keys.A) { left = false; }
             if (e.KeyData == Keys.S) { down = false; }
             if (e.KeyData == Keys.D) { right = false; }
+            afkTimerCheck = false;
         }
 
         private void FrmGame_Load(object sender, EventArgs e)
@@ -177,7 +180,7 @@ namespace _201COS_Game
         private void MnuStart_Click(object sender, EventArgs e)
         {
             playerName = TxtName.Text;
-            if (Regex.IsMatch(playerName, @"^[a-zA-Z]+$"))
+            if (Regex.IsMatch(playerName, @"^[a-zA-Z0-9]+$"))
             {
                 if (TxtName.Text.Count() > 3 && TxtName.Text != "Please input your name")
                 {
@@ -195,7 +198,7 @@ namespace _201COS_Game
                 }
             }else
             {
-                MessageBox.Show("Please enter a name\nWith only letters", "oops");
+                MessageBox.Show("Please enter a name\nWith only letters and numbers(no spaces)", "oops");
             }
         }
 
@@ -314,7 +317,7 @@ namespace _201COS_Game
                 if (lives <= 0 && !endGame)
                 {
                     endGame = true;
-                    LostGame();
+                    LostGame(false);
                 }
             }
 
@@ -360,6 +363,7 @@ namespace _201COS_Game
            if (e.KeyData == Keys.A) { left = true; }
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
+           if (!afkTimerCheck) { afkTimer = 0; afkTimerCheck = true; }
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
@@ -370,6 +374,12 @@ namespace _201COS_Game
             if (player.y < 0) { player.y += 10; }
 
             PnlGame.Invalidate();
+            afkTimer++;
+            if (afkTimer >= 450)
+            {
+                lives--;
+                afkTimer = 375;
+            }
         }
     }
 }
