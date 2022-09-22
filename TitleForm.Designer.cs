@@ -32,6 +32,7 @@ namespace _201COS_Game
             this.TextAngryBirds = new System.Windows.Forms.Label();
             this.BtnPlay = new System.Windows.Forms.Button();
             this.PicAlien = new System.Windows.Forms.PictureBox();
+            this.BtnInstructions = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PicAlien)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,12 +66,23 @@ namespace _201COS_Game
             this.PicAlien.TabIndex = 2;
             this.PicAlien.TabStop = false;
             // 
+            // BtnInstructions
+            // 
+            this.BtnInstructions.Location = new System.Drawing.Point(281, 360);
+            this.BtnInstructions.Name = "BtnInstructions";
+            this.BtnInstructions.Size = new System.Drawing.Size(75, 23);
+            this.BtnInstructions.TabIndex = 3;
+            this.BtnInstructions.Text = "How to Play";
+            this.BtnInstructions.UseVisualStyleBackColor = true;
+            this.BtnInstructions.Click += new System.EventHandler(this.BtnInstructions_Click);
+            // 
             // TitleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.ClientSize = new System.Drawing.Size(688, 568);
+            this.Controls.Add(this.BtnInstructions);
             this.Controls.Add(this.PicAlien);
             this.Controls.Add(this.BtnPlay);
             this.Controls.Add(this.TextAngryBirds);
@@ -89,5 +101,6 @@ namespace _201COS_Game
         private System.Windows.Forms.Label TextAngryBirds;
         private System.Windows.Forms.Button BtnPlay;
         private System.Windows.Forms.PictureBox PicAlien;
+        private System.Windows.Forms.Button BtnInstructions;
     }
 }

@@ -49,6 +49,8 @@ namespace _201COS_Game
             this.MnuHighScore = new System.Windows.Forms.ToolStripMenuItem();
             this.TmrPowerUp = new System.Windows.Forms.Timer(this.components);
             this.TmrSlowShoot = new System.Windows.Forms.Timer(this.components);
+            this.TextMove = new System.Windows.Forms.Label();
+            this.PnlGame.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -163,6 +165,7 @@ namespace _201COS_Game
             // 
             this.PnlGame.BackgroundImage = global::_201COS_Game.Properties.Resources.Background;
             this.PnlGame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PnlGame.Controls.Add(this.TextMove);
             this.PnlGame.Location = new System.Drawing.Point(12, 63);
             this.PnlGame.Name = "PnlGame";
             this.PnlGame.Size = new System.Drawing.Size(660, 490);
@@ -217,6 +220,19 @@ namespace _201COS_Game
             this.TmrSlowShoot.Interval = 200;
             this.TmrSlowShoot.Tick += new System.EventHandler(this.TmrSlowShoot_Tick);
             // 
+            // TextMove
+            // 
+            this.TextMove.AutoSize = true;
+            this.TextMove.BackColor = System.Drawing.Color.Transparent;
+            this.TextMove.Font = new System.Drawing.Font("Tw Cen MT Condensed Extra Bold", 100F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TextMove.ForeColor = System.Drawing.Color.Red;
+            this.TextMove.Location = new System.Drawing.Point(135, 175);
+            this.TextMove.Name = "TextMove";
+            this.TextMove.Size = new System.Drawing.Size(372, 158);
+            this.TextMove.TabIndex = 0;
+            this.TextMove.Text = "MOVE";
+            this.TextMove.Visible = false;
+            // 
             // FrmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -244,6 +260,8 @@ namespace _201COS_Game
             this.Load += new System.EventHandler(this.FrmGame_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);
+            this.PnlGame.ResumeLayout(false);
+            this.PnlGame.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -272,6 +290,7 @@ namespace _201COS_Game
         private System.Windows.Forms.Timer TmrPowerUp;
         private System.Windows.Forms.ToolStripMenuItem MnuHighScore;
         private System.Windows.Forms.Timer TmrSlowShoot;
+        private System.Windows.Forms.Label TextMove;
     }
 }
 

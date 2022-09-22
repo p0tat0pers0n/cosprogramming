@@ -26,5 +26,9 @@ namespace _201COS_Game
             FrmGame2.ShowDialog();
 
         }
+        private void BtnInstructions_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Move using WASD, aim with mouse and use left click to shoot.", "Instructions");
+        }
     }
 }

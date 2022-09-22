@@ -18,12 +18,12 @@ namespace _201COS_Game
     public partial class FrmGame : Form
     {
         Graphics g; //declare a graphics object called g so we can draw on the Form
-        bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState, afkTimerCheck;
-        int mouseX, mouseY, score, timeElapsed, lives, powerUpTime, mouseHeldTime, afkTimer;
+        bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState, afkTimerCheck, isAFK;
+        int mouseX, mouseY, score, timeElapsed, lives, powerUpTime, mouseHeldTime, afkTimer, blinkCD;
         string filePath, fileName, pathString, playerName;
         Player player = new Player();
-        Random bomberChance = new Random();
-        Random starChance = new Random();
+        Random bomberChance = new Random(369523922);
+        Random starChance = new Random(58489772);
         Rectangle powerUpRec;
         Image powerUpImg;
 
@@ -39,6 +39,7 @@ namespace _201COS_Game
             InitializeComponent();
             lives = 10;
             afkTimer = 0;
+            blinkCD = 0;
             gameState = false;
             MnuPause.Enabled = false;
             filePath = @"H:\";
@@ -363,7 +364,7 @@ namespace _201COS_Game
            if (e.KeyData == Keys.A) { left = true; }
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
-           if (!afkTimerCheck) { afkTimer = 0; afkTimerCheck = true; }
+           if (!afkTimerCheck) { afkTimer = 0; afkTimerCheck = true; isAFK = false; }
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
@@ -375,10 +376,20 @@ namespace _201COS_Game
 
             PnlGame.Invalidate();
             afkTimer++;
+            blinkCD++;
             if (afkTimer >= 450)
             {
+                isAFK = true;
                 lives--;
                 afkTimer = 375;
+            }
+            if (blinkCD == 50 && isAFK)
+            {
+                TextMove.Visible = true;
+            }else if (blinkCD == 100)
+            {
+                TextMove.Visible = false;
+                blinkCD = 0;
             }
         }
     }
