@@ -24,11 +24,10 @@ namespace _201COS_Game
             FrmGame FrmGame2 = new FrmGame();
             //Display the Game Form
             FrmGame2.ShowDialog();
-
         }
         private void BtnInstructions_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Move using WASD, aim with mouse and use left click to shoot.", "Instructions");
+            MessageBox.Show("Move using WASD, aim with mouse and use left click to shoot.\nKill the green aliens, avoid the bombs and collect the shooting stars for a powerup.", "Instructions");
         }
     }
 }

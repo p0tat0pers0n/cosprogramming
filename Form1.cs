@@ -16,7 +16,8 @@ using System.Text.RegularExpressions;
 namespace _201COS_Game
 {
     public partial class FrmGame : Form
-    {
+    {   
+        // Declarations //
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState, afkTimerCheck, isAFK;
         int mouseX, mouseY, score, timeElapsed, lives, powerUpTime, mouseHeldTime, afkTimer, blinkCD;
@@ -46,26 +47,29 @@ namespace _201COS_Game
             fileName = "angrynerdssave.txt";
             pathString = System.IO.Path.Combine(filePath, fileName);
 
-            powerUpImg = Properties.Resources.fireyfirearm;
-            powerUpRec = new Rectangle(ClientSize.Width - 100, ClientSize.Height - 150, 75, 75);
+            powerUpImg = Properties.Resources.powerupIcon;
+            powerUpRec = new Rectangle(ClientSize.Width - 100, ClientSize.Height - 150, 36, 56);
 
+            // Sets double buffering for the game panel
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
 
-            //displays highscore on menubar
+            // Displays highscore on menubar
             if (File.Exists(pathString))
             {
                 string[] saveFileData = System.IO.File.ReadAllLines(pathString);
                 MnuHighScore.Text = "Highscore: " + saveFileData[2];
             }
+            MessageBox.Show("Please enter a name to begin.\nThen press the start button.", "Instructions");
         }
 
         private void MnuHighScore_Click(object sender, EventArgs e)
         {
+            // The menu button which displays the highscore
             if (File.Exists(pathString))
             {
                 string[] resetSaveData = { "null", "0", "0" };
                 DialogResult result;
-                result = MessageBox.Show("Would you like to reset your save file?", "IMPORTANT", MessageBoxButtons.YesNo);
+                result = MessageBox.Show("Would you like to reset your save file?", "IMPORTANT", MessageBoxButtons.YesNo); // Checks if save exists and if so asks the player if they want to delete it
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
                     File.WriteAllLines(pathString, resetSaveData);
@@ -76,12 +80,15 @@ namespace _201COS_Game
 
         private void FrmGame_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LostGame(true);
+            // I did this because the title form would not close after closing the game form
+            // This also makes sure that all tasks are stopped
+            LostGame(true); // This runs the save highscore function without displaying the new highscore text
             System.Environment.Exit(1);
         }
 
         private void TmrSlowShoot_Tick(object sender, EventArgs e)
         {
+            // This function allows you to hold down the left mouse button to shoot slowly compared to clicking rapidly
             if (mouseState && !powerUpStatus && mouseHeldTime > 3)
             {
                 bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
@@ -90,6 +97,7 @@ namespace _201COS_Game
 
         public void LostGame(bool onlyHighscore)
         {
+            // This saves the highscore(if it is a highscore) and stops the game
             TmrEnemySpawn.Enabled = false;
             TmrGun.Enabled = false;
             TmrPlayer.Enabled = false;
@@ -134,6 +142,7 @@ namespace _201COS_Game
 
         private void TmrPowerUp_Tick(object sender, EventArgs e)
         {
+            // Shows the powerup icon and turns it off when its over
             powerUpTime++;
             if (powerUpTime == 10)
             {
@@ -146,11 +155,11 @@ namespace _201COS_Game
         {
             if (mouseState)
             {
-                mouseHeldTime++;
+                mouseHeldTime++; // This stops double firing from the inital click and the held down function which would be an exploit
             }
             if (mouseState && powerUpStatus)
             {
-                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
+                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y)); // This is the powerup which is gained from the shooting star
             }
             foreach (Bullet b in bullets.ToList())
             {
@@ -159,7 +168,7 @@ namespace _201COS_Game
                 {
                     if (b.bulletRec.IntersectsWith(a.alienRec))
                     {
-                        bullets.Remove(b);
+                        bullets.Remove(b); //Adds score if the bullet touches an alien
                         aliens.Remove(a);
                         score++;
                         LblScore.Text = score.ToString();
@@ -168,7 +177,7 @@ namespace _201COS_Game
                     
                     if (b.bulletRec.Location.X > 660 || b.bulletRec.Location.X < 0)
                     {
-                        bullets.Remove(b);
+                        bullets.Remove(b); // Removes bullets if they leave the screen
                     }
                     if (b.bulletRec.Location.Y > 490 || b.bulletRec.Location.Y < 0)
                     {
@@ -181,11 +190,11 @@ namespace _201COS_Game
         private void MnuStart_Click(object sender, EventArgs e)
         {
             playerName = TxtName.Text;
-            if (Regex.IsMatch(playerName, @"^[a-zA-Z0-9]+$"))
+            if (Regex.IsMatch(playerName, @"^[a-zA-Z0-9]+$")) // Checks if the name contains only letters and numbers
             {
                 if (TxtName.Text.Count() > 3 && TxtName.Text != "Please input your name")
                 {
-                    if (!gameState)
+                    if (!gameState)// Starts the game
                     {
                         TmrEnemySpawn.Enabled = true;
                         TmrGun.Enabled = true;
@@ -205,7 +214,7 @@ namespace _201COS_Game
 
         private void MnuPause_Click(object sender, EventArgs e)
         {
-            if (gameState)
+            if (gameState) // Pauses the game to play later 
             {
                 TmrEnemySpawn.Enabled = false;
                 TmrGun.Enabled = false;
@@ -220,18 +229,21 @@ namespace _201COS_Game
 
         private void PnlGame_MouseDown(object sender, MouseEventArgs e)
         {
+            // Generates a bullet when the player clicks
             bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
             mouseState = true;
         }
 
         private void PnlGame_MouseUp(object sender, MouseEventArgs e)
         {
+            // Stops the firing when the player is not holding down the mouse button
             mouseState = false;
             mouseHeldTime = 0;
         }
 
         private void TmrTime_Tick(object sender, EventArgs e)
         {
+            // Manages the enemy spawn speed and the timer
             timeElapsed++;
             lblTime.Text = timeElapsed.ToString();
             if (TmrEnemySpawn.Interval > 110)
@@ -242,7 +254,7 @@ namespace _201COS_Game
 
         private void TmrEnemySpawn_Tick(object sender, EventArgs e)
         {
-            aliens.Add(new Alien());
+            aliens.Add(new Alien()); // Adds an alien every tick and occasionally adds a bomber or shooting star
             if (bomberChance.Next(1, 10) == 1)
             {
                 bombers.Add(new Bomber());
@@ -255,19 +267,20 @@ namespace _201COS_Game
 
         private void PnlGame_MouseMove(object sender, MouseEventArgs e)
         {
-            mouseX = e.X;
+            mouseX = e.X; // Allows the mouse tracking function to work
             mouseY = e.Y;
         }
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
-            player.MoveRotatePlayer(mouseX, mouseY, PlayerRec, g, up, down, left, right);
+            player.MoveRotatePlayer(mouseX, mouseY, PlayerRec, g, up, down, left, right); // Moves and rotates the player according to the mouse down and mouse x and y
 
             if (powerUpStatus)
             {
-                g.DrawImage(powerUpImg, powerUpRec);
+                g.DrawImage(powerUpImg, powerUpRec); // Draws the powerup icon if its active
             }
 
+            // Draws the bullets, stars, aliens, bombers and bombs if they are on screen
             foreach (Bullet b in bullets)
             {
                 b.draw(g);
@@ -278,7 +291,7 @@ namespace _201COS_Game
             {
                 s.drawStar(g);
                 s.moveStar();
-                if (player.playerRec.IntersectsWith(s.starRec))
+                if (player.playerRec.IntersectsWith(s.starRec)) // Checks if the player collides with the star and if so gives them the powerup
                 {
                     stars.Remove(s);
                     powerUpTime = 0;
@@ -289,7 +302,7 @@ namespace _201COS_Game
 
                 if (s.starRec.Location.X > 660 || s.starRec.Location.X < 0)
                 {
-                    stars.Remove(s);
+                    stars.Remove(s); // Removes the star if its off-screen
                 }
                 if (s.starRec.Location.Y > 490 || s.starRec.Location.Y < 0)
                 {
@@ -305,7 +318,7 @@ namespace _201COS_Game
                 /////////////////////////////////////////////////////////////
                 if (a.alienRec.Location.X > 660 || a.alienRec.Location.X < 0)
                 {
-                    aliens.Remove(a);
+                    aliens.Remove(a); // Removes the alien if its off-screen and removes a life
                     lives--;
                 }
                 if (a.alienRec.Location.Y > 490 || a.alienRec.Location.Y < 0)
@@ -315,9 +328,9 @@ namespace _201COS_Game
                 }
 
                 LblLives.Text = lives.ToString();
-                if (lives <= 0 && !endGame)
+                if (lives <= 0 && !endGame) // Checks if the game is over
                 {
-                    endGame = true;
+                    endGame = true;// Makes sure this isn't called multiple times
                     LostGame(false);
                 }
             }
@@ -336,10 +349,10 @@ namespace _201COS_Game
             foreach (Bomb d in bombs.ToList())
             {
                 d.drawBomb(g);
-                d.countBombTime();
+                d.countBombTime();// Starts the countdown for the bomb to explode
                 if (d.bombTimer >= 77)
                 {
-                    bombs.Remove(d);
+                    bombs.Remove(d); // Removes the bomb after it explodes
                 }
 
                 foreach (Alien a in aliens.ToList())
@@ -365,6 +378,7 @@ namespace _201COS_Game
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
            if (!afkTimerCheck) { afkTimer = 0; afkTimerCheck = true; isAFK = false; }
+           if (e.KeyData == Keys.G) { stars.Add(new ShootingStar()); }
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
