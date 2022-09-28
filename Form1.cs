@@ -17,9 +17,18 @@ namespace _201COS_Game
 {
     public partial class FrmGame : Form
     {   
-        // Declarations //
+        //       Declarations       //
+
         Graphics g; //declare a graphics object called g so we can draw on the Form
         bool up, down, left, right, endGame, gameState, powerUpStatus, mouseState, afkTimerCheck, isAFK;
+        // up, down, left and right - used for moving the player inside Player.cs
+        // endGame - stores when the game is over so it does not spam messageboxes
+        // gameState - stores whether the game is active or yet to be started
+        // powerUpStatus - stores whether the powerUp is active
+        // mouseState - used for the powerup and the slower mouse hold shooting
+        // afkTimerCheck - this stops the player from being able to hold down a button to stop the "campfire"
+        // isAFK - stores whether or not the player has been standing still for 
+
         int mouseX, mouseY, score, timeElapsed, lives, powerUpTime, mouseHeldTime, afkTimer, blinkCD;
         string filePath, fileName, pathString, playerName;
         Player player = new Player();
@@ -92,6 +101,10 @@ namespace _201COS_Game
             if (mouseState && !powerUpStatus && mouseHeldTime > 3)
             {
                 bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
+                // Adds a bullet with the following information
+                // PlayerRec - for getting the player width and height
+                // player.angleCalc - for rotating the bullet when the player is rotated
+                // player.x and player.y - For getting the spawn-in position for the bullets
             }
         }
 
@@ -103,6 +116,7 @@ namespace _201COS_Game
             TmrPlayer.Enabled = false;
             TmrTime.Enabled = false;
             if (!onlyHighscore) { MessageBox.Show("You lost\nWith a time of: " + timeElapsed.ToString() + " seconds\nAnd " + score.ToString() + " kills", "Game End"); }
+            // ^ This avoids the highscore message from showing when the game is force closed
 
             if (score != 0)
             {
@@ -295,18 +309,18 @@ namespace _201COS_Game
                 {
                     stars.Remove(s);
                     powerUpTime = 0;
-                    lives++;
+                    lives++;// Star gives a life
                     powerUpStatus = true;
-                    TmrPowerUp.Enabled = true;
+                    TmrPowerUp.Enabled = true;// Counts how long the powerup is active
                 }
 
                 if (s.starRec.Location.X > 660 || s.starRec.Location.X < 0)
                 {
-                    stars.Remove(s); // Removes the star if its off-screen
+                    stars.Remove(s);// Removes the star if its off-screen
                 }
                 if (s.starRec.Location.Y > 490 || s.starRec.Location.Y < 0)
                 {
-                    stars.Remove(s);
+                    stars.Remove(s);// Removes the star if its off-screen
                 }
             }
 
@@ -318,12 +332,12 @@ namespace _201COS_Game
                 /////////////////////////////////////////////////////////////
                 if (a.alienRec.Location.X > 660 || a.alienRec.Location.X < 0)
                 {
-                    aliens.Remove(a); // Removes the alien if its off-screen and removes a life
+                    aliens.Remove(a);// Removes the alien if its off-screen and removes a life
                     lives--;
                 }
                 if (a.alienRec.Location.Y > 490 || a.alienRec.Location.Y < 0)
                 {
-                    aliens.Remove(a);
+                    aliens.Remove(a);// Removes the alien if its off-screen and removes a life
                     lives--;
                 }
 
@@ -331,7 +345,7 @@ namespace _201COS_Game
                 if (lives <= 0 && !endGame) // Checks if the game is over
                 {
                     endGame = true;// Makes sure this isn't called multiple times
-                    LostGame(false);
+                    LostGame(false);// Saves the highscore
                 }
             }
 
@@ -340,7 +354,7 @@ namespace _201COS_Game
                 t.moveBomber();
                 t.drawBomber(g);
 
-                if (t.bomberY >= 225 && t.bomberY <= 245)
+                if (t.bomberY >= 225 && t.bomberY <= 245)// Drops a bomb when the bomber is half way up the screen
                 {
                     bombs.Add(new Bomb(t.leftOrRight));
                 }
@@ -359,14 +373,14 @@ namespace _201COS_Game
                 {
                     if (d.bombRec.IntersectsWith(a.alienRec) && d.bombTimer >= 66)
                     {
-                        aliens.Remove(a);
+                        aliens.Remove(a);// When the bomb explodes it removes any aliens touching it
                     }
                 }
 
                 if (d.bombRec.IntersectsWith(player.playerRec) && d.bombTimer >= 66 && d.bombGaveDamage == false)
                 {
-                    d.bombGaveDamage = true;
-                    lives--;
+                    d.bombGaveDamage = true;// Stops the bomb from removing too many lives
+                    lives--;// Removes player lives if its touching the bomb when it explodes
                 }
             }
         }
@@ -377,8 +391,7 @@ namespace _201COS_Game
            if (e.KeyData == Keys.A) { left = true; }
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
-           if (!afkTimerCheck) { afkTimer = 0; afkTimerCheck = true; isAFK = false; }
-           if (e.KeyData == Keys.G) { stars.Add(new ShootingStar()); }
+           if (!afkTimerCheck) { afkTimer = 0; afkTimerCheck = true; isAFK = false; }// Checks if the player has pressed a key and marks them not afk
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
@@ -389,14 +402,16 @@ namespace _201COS_Game
             if (player.y < 0) { player.y += 10; }
 
             PnlGame.Invalidate();
-            afkTimer++;
-            blinkCD++;
+            afkTimer++;// If the player is currently afk
+            blinkCD++;// The afk move text blink cooldown (so it only blinks every so often)
             if (afkTimer >= 450)
             {
+                // Starts removing lives if the player is afk
                 isAFK = true;
                 lives--;
                 afkTimer = 375;
             }
+            // Blinks the MOVE text when the player is afk
             if (blinkCD == 50 && isAFK)
             {
                 TextMove.Visible = true;
