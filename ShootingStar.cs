@@ -11,6 +11,10 @@ namespace _201COS_Game
     class ShootingStar
     {
         public int starX, starY, width, height, rotationAngle, side;
+        // starX, starY - the location of the star
+        // width, height - the size of the star
+        // rotationAngle - changes depending on which side it spawns on
+
         public Rectangle starRec;
         Random spawnSide, spawnY;
         Image starImg = Properties.Resources.shootingStar;

@@ -10,15 +10,18 @@ namespace _201COS_Game
 {
     class Alien
     {
-        public Rectangle alienRec;
+        public Rectangle alienRec;// Defines the rectangle for the alien
         public int alienX,alienY,width,height,side,xSpawn,ySpawn;
-        public Image alienImg;
-        //public double xSpeed, ySpeed;
-        public Random sideChance;
-        public Random xSpawnOffset;
-        public Random ySpawnOffset;
-        public Matrix matrixAlien;
-        Point centreAlien;
+        // alienX, alienY - Stores where the alien is
+        // width, height - Stores how large the alien is going to be
+        // side - Stores which side the alien will be on/where it moves
+
+        Image alienImg;
+        Random sideChance;// Stores its result in the int side to decide which side it spawns on or moves
+        Random xSpawnOffset;// If it spawns on the top or bottom where will it spawn along it
+        Random ySpawnOffset;// If it spawns on the left or right where will it spawn along it
+        Matrix matrixAlien;// Stops the alien from being rotated due to the bullets
+        Point centreAlien;// Creates a centre for the alien to rotate around
         public Alien()
         {
             width = 75;
@@ -34,6 +37,7 @@ namespace _201COS_Game
 
         public void newAlien()
         {
+            // Randomises the side that it spawns on and the x and y spawn offset
             xSpawn = xSpawnOffset.Next(50, 600);
             ySpawn = ySpawnOffset.Next(50, 390);
             side = sideChance.Next(1, 5);
@@ -70,6 +74,7 @@ namespace _201COS_Game
 
         public void moveAlien()
         {
+            // Moves the alien depending on its spawn side
             if (side == 1) { alienY += 5; }
             if (side == 2) { alienX -= 5; }
             if (side == 3) { alienY -= 5; }
@@ -83,7 +88,7 @@ namespace _201COS_Game
             centreAlien = new Point(alienX, alienY);
             //instantiate a Matrix object called matrixAlien
             matrixAlien = new Matrix();
-            //rotate the matrix (in this case bulletRec) about its centre
+            //rotate the matrix (in this case alienRec) about its centre
             matrixAlien.RotateAt(0, centreAlien);
             //Set the current draw location to the rotated matrix point i.e. where alienRec is now
             g.Transform = matrixAlien;
