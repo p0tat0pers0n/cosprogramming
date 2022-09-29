@@ -12,26 +12,27 @@ namespace _201COS_Game
 {
     class Player
     {
-        Image _Image;
-        public int x, y;
-        Bitmap PlayerImg;
-        public float angleCalc;
-        public Rectangle playerRec;
+        Image playerImg;// So it isn't a blank rectangle
+        public int x, y;// For movement
+        Bitmap PlayerImg;// So it can be modified
+        public float angleCalc;// The angle it needs to be rotated
+        public Rectangle playerRec;// To allow star collection
 
         //Create a constructor (initialises the values of the fields)
         public Player()
         {
-            _Image = Properties.Resources.player2;   
+            playerImg = Properties.Resources.player2;// Sets the player image 
         }
         public void MoveRotatePlayer(float mouseX, float mouseY, Rectangle PlayerRec, Graphics g, bool up, bool down, bool left, bool right)
         {
+            // moves the player depending on the bools status
             if (up) { y -= 5; }
             if (down) { y += 5; }
             if (left) { x -= 5; }
             if (right) { x += 5; }
-            playerRec = PlayerRec;
+            playerRec = PlayerRec;// Required for the star collection
 
-            playerRec.Location = new Point(x, y);
+            playerRec.Location = new Point(x, y);// Sets the player's location
 
             //get the direction of the mouse by looking at the position of the picture box in relation to the mouse pointer
             Vector2 PicPlayerPlane = new Vector2(mouseX - playerRec.Location.X, mouseY - playerRec.Location.Y);
@@ -42,13 +43,12 @@ namespace _201COS_Game
             //https://en.wikipedia.org/wiki/Radian
             float convertToDeg = (float)(180 / Math.PI);
 
-            angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y - 10, PicPlayerPlane.X - 10) * convertToDeg);
+            angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y - 10, PicPlayerPlane.X - 10) * convertToDeg);// Calculates the angle that the player needs to rotate to point at the cursor
 
-            Bitmap calcBitmap = new Bitmap(_Image, 100, 100);
+            Bitmap calcBitmap = new Bitmap(playerImg, 100, 100);// Creates a bitmap with the image so it can be manipulated
 
-            //set picture box 2 to the rotated source image.
-            PlayerImg = RotateImage(calcBitmap, angleCalc);
-            g.DrawImage(PlayerImg, playerRec);
+            PlayerImg = RotateImage(calcBitmap, angleCalc);// Runs the rotate function with the calculated angle
+            g.DrawImage(PlayerImg, playerRec);// Draws the player after its been rotated
         }
 
         public Bitmap RotateImage(Bitmap calcBitMap, float angle)
@@ -64,7 +64,7 @@ namespace _201COS_Game
                 //draw passed in image onto graphics object
                 g.DrawImage(calcBitMap, new PointF(0, 0));
             }
-            return calcBitMap;
+            return calcBitMap;// Returns so it can be used to draw the player
         }
     }
 }

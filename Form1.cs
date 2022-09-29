@@ -27,17 +27,34 @@ namespace _201COS_Game
         // powerUpStatus - stores whether the powerUp is active
         // mouseState - used for the powerup and the slower mouse hold shooting
         // afkTimerCheck - this stops the player from being able to hold down a button to stop the "campfire"
-        // isAFK - stores whether or not the player has been standing still for 
+        // isAFK - stores whether or not the player has been standing still
 
-        int mouseX, mouseY, score, timeElapsed, lives, powerUpTime, mouseHeldTime, afkTimer, blinkCD;
+        int mouseX, mouseY, score, timeElapsed, lives, powerUpTime, mouseHeldTime, afkTimer, blinkCoolDown;
+        // mouseX, mouseY - sets the mouse x and y for use in the cursor rotation tracking
+        // score - to hold the player's current score
+        // timeElapsed - stores the amount of time that the player has spent in the game (seconds)
+        // lives - stores the number of lives that the player has
+        // powerUpTime - for turning off the power up when 10 seconds has passed
+        // mouseHeldTime - stores how long the mouse is held down for the slow shoot function to avoid a double fire for every single click
+        // afkTimer - stores how long since the player has pressed and released a keyboard button
+        // blinkCoolDown - stops the move text from blinking too often
+
         string filePath, fileName, pathString, playerName;
-        Player player = new Player();
-        Random bomberChance = new Random(369523922);
-        Random starChance = new Random(58489772);
-        Rectangle powerUpRec;
-        Image powerUpImg;
+        // filePath - stores where the highscore save file is going
+        // fileName - defines what the file's name is going to be
+        // pathString - stores a combination of the filePath and the fileName for easy saving
 
-        Rectangle PlayerRec = new Rectangle();
+        Player player = new Player();// creates a new instance of the player class
+
+        Random bomberChance = new Random(369523922);// Defines the random number for bomber chance and its seed number
+        Random starChance = new Random(58489772);// Defines the random number for shooting star chance and its seed number
+        // ^ These seed numbers are different because if they were the same(or not defined at all) they can often spawn at the same time ^ \\
+        
+        Rectangle powerUpRec;// Defines the powerup rectangle
+        Image powerUpImg;// Defines the powerup image
+        Rectangle PlayerRec = new Rectangle();// Sets the rectangle for the player
+
+        // Lists to create more than one instance of the class
         List<Bullet> bullets = new List<Bullet>();
         List<Alien> aliens = new List<Alien>();
         List<Bomber> bombers = new List<Bomber>();
@@ -47,17 +64,20 @@ namespace _201COS_Game
         public FrmGame()
         {
             InitializeComponent();
+            // Initial declarations
             lives = 10;
             afkTimer = 0;
-            blinkCD = 0;
+            blinkCoolDown = 0;
             gameState = false;
             MnuPause.Enabled = false;
+
+            // Prepares highscore saving
             filePath = @"H:\";
             fileName = "angrynerdssave.txt";
             pathString = System.IO.Path.Combine(filePath, fileName);
 
-            powerUpImg = Properties.Resources.powerupIcon;
-            powerUpRec = new Rectangle(ClientSize.Width - 100, ClientSize.Height - 150, 36, 56);
+            powerUpImg = Properties.Resources.powerupIcon;// Sets the powerup icon image
+            powerUpRec = new Rectangle(ClientSize.Width - 100, ClientSize.Height - 150, 36, 56);// Creates the rectangle to hold the powerup icon
 
             // Sets double buffering for the game panel
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
@@ -76,7 +96,7 @@ namespace _201COS_Game
             // The menu button which displays the highscore
             if (File.Exists(pathString))
             {
-                string[] resetSaveData = { "null", "0", "0" };
+                string[] resetSaveData = { "null", "0", "0" };// Sets the data to overwrite the current save file
                 DialogResult result;
                 result = MessageBox.Show("Would you like to reset your save file?", "IMPORTANT", MessageBoxButtons.YesNo); // Checks if save exists and if so asks the player if they want to delete it
                 if (result == System.Windows.Forms.DialogResult.Yes)
@@ -403,7 +423,7 @@ namespace _201COS_Game
 
             PnlGame.Invalidate();
             afkTimer++;// If the player is currently afk
-            blinkCD++;// The afk move text blink cooldown (so it only blinks every so often)
+            blinkCoolDown++;// The afk move text blink cooldown (so it only blinks every so often)
             if (afkTimer >= 450)
             {
                 // Starts removing lives if the player is afk
@@ -412,13 +432,13 @@ namespace _201COS_Game
                 afkTimer = 375;
             }
             // Blinks the MOVE text when the player is afk
-            if (blinkCD == 50 && isAFK)
+            if (blinkCoolDown == 50 && isAFK)
             {
                 TextMove.Visible = true;
-            }else if (blinkCD == 100)
+            }else if (blinkCoolDown == 100)
             {
                 TextMove.Visible = false;
-                blinkCD = 0;
+                blinkCoolDown = 0;
             }
         }
     }
