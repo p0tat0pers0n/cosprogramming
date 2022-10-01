@@ -154,7 +154,7 @@ namespace _201COS_Game
                     }
                 }else
                 {
-                    File.WriteAllLines(pathString, saveData);
+                    File.WriteAllLines(pathString, saveData);// Write the save if another one does not exist
                 }
             }
             Application.Exit();

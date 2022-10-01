@@ -33,7 +33,17 @@ namespace _201COS_Game
             this.BtnPlay = new System.Windows.Forms.Button();
             this.PicAlien = new System.Windows.Forms.PictureBox();
             this.BtnInstructions = new System.Windows.Forms.Button();
+            this.PicStar = new System.Windows.Forms.PictureBox();
+            this.PicBomber = new System.Windows.Forms.PictureBox();
+            this.PicBomb = new System.Windows.Forms.PictureBox();
+            this.PicPlayer = new System.Windows.Forms.PictureBox();
+            this.PicBullet = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.PicAlien)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicStar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBomber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBomb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicPlayer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBullet)).BeginInit();
             this.SuspendLayout();
             // 
             // TextAngryBirds
@@ -76,12 +86,64 @@ namespace _201COS_Game
             this.BtnInstructions.UseVisualStyleBackColor = true;
             this.BtnInstructions.Click += new System.EventHandler(this.BtnInstructions_Click);
             // 
+            // PicStar
+            // 
+            this.PicStar.Image = global::_201COS_Game.Properties.Resources.shootingStar;
+            this.PicStar.Location = new System.Drawing.Point(50, 153);
+            this.PicStar.Name = "PicStar";
+            this.PicStar.Size = new System.Drawing.Size(78, 123);
+            this.PicStar.TabIndex = 4;
+            this.PicStar.TabStop = false;
+            // 
+            // PicBomber
+            // 
+            this.PicBomber.Image = global::_201COS_Game.Properties.Resources.taiFighter;
+            this.PicBomber.Location = new System.Drawing.Point(516, 35);
+            this.PicBomber.Name = "PicBomber";
+            this.PicBomber.Size = new System.Drawing.Size(140, 131);
+            this.PicBomber.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBomber.TabIndex = 5;
+            this.PicBomber.TabStop = false;
+            // 
+            // PicBomb
+            // 
+            this.PicBomb.Image = global::_201COS_Game.Properties.Resources.bomb;
+            this.PicBomb.Location = new System.Drawing.Point(563, 172);
+            this.PicBomb.Name = "PicBomb";
+            this.PicBomb.Size = new System.Drawing.Size(61, 78);
+            this.PicBomb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBomb.TabIndex = 6;
+            this.PicBomb.TabStop = false;
+            // 
+            // PicPlayer
+            // 
+            this.PicPlayer.Image = global::_201COS_Game.Properties.Resources.player2;
+            this.PicPlayer.Location = new System.Drawing.Point(32, 432);
+            this.PicPlayer.Name = "PicPlayer";
+            this.PicPlayer.Size = new System.Drawing.Size(104, 101);
+            this.PicPlayer.TabIndex = 7;
+            this.PicPlayer.TabStop = false;
+            // 
+            // PicBullet
+            // 
+            this.PicBullet.Image = global::_201COS_Game.Properties.Resources.bullet;
+            this.PicBullet.Location = new System.Drawing.Point(170, 478);
+            this.PicBullet.Name = "PicBullet";
+            this.PicBullet.Size = new System.Drawing.Size(12, 67);
+            this.PicBullet.TabIndex = 8;
+            this.PicBullet.TabStop = false;
+            // 
             // TitleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.ClientSize = new System.Drawing.Size(688, 568);
+            this.Controls.Add(this.PicBullet);
+            this.Controls.Add(this.PicPlayer);
+            this.Controls.Add(this.PicBomb);
+            this.Controls.Add(this.PicBomber);
+            this.Controls.Add(this.PicStar);
             this.Controls.Add(this.BtnInstructions);
             this.Controls.Add(this.PicAlien);
             this.Controls.Add(this.BtnPlay);
@@ -91,6 +153,11 @@ namespace _201COS_Game
             this.Name = "TitleForm";
             this.Text = "Angry Nerds";
             ((System.ComponentModel.ISupportInitialize)(this.PicAlien)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicStar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBomber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBomb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicPlayer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBullet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -102,5 +169,10 @@ namespace _201COS_Game
         private System.Windows.Forms.Button BtnPlay;
         private System.Windows.Forms.PictureBox PicAlien;
         private System.Windows.Forms.Button BtnInstructions;
+        private System.Windows.Forms.PictureBox PicStar;
+        private System.Windows.Forms.PictureBox PicBomber;
+        private System.Windows.Forms.PictureBox PicBomb;
+        private System.Windows.Forms.PictureBox PicPlayer;
+        private System.Windows.Forms.PictureBox PicBullet;
     }
 }

@@ -15,16 +15,16 @@ namespace _201COS_Game
         // width, height - the size of the star
         // rotationAngle - changes depending on which side it spawns on
 
-        public Rectangle starRec;
-        Random spawnSide, spawnY;
-        Image starImg = Properties.Resources.shootingStar;
-        public Matrix matrixStar;
-        Point centreStar;
+        public Rectangle starRec;// creates rectangle to hold the star -- is public for collision detection with player
+        Random spawnSide, spawnY;// randoms for if it spawns on left or right and how high it spawns on either side
+        Image starImg = Properties.Resources.shootingStar;// image for the star
+        public Matrix matrixStar;// to rotate the star depending on the side it spawns on
+        Point centreStar;// the point where the star rotates around
         public ShootingStar()
         {
             width = 75;
             height = 125;
-            rotationAngle = 90;
+            rotationAngle = 90;// default angle
 
             spawnSide = new Random();
             spawnY = new Random();
@@ -54,21 +54,22 @@ namespace _201COS_Game
         }
         public void moveStar()
         {
+            // Moves the star depending on its spawn side e.g. spawns on left so must move right
             if (side == 1) { starX += 5; }
             if (side == 2) { starX -= 5; }
             starRec.Location = new Point(starX, starY);
         }
         public void drawStar(Graphics g)
         {
-            //centre bullet 
+            //centre of the star 
             centreStar = new Point(starX, starY);
-            //instantiate a Matrix object called matrixBomber
+            //instantiate a Matrix object called matrixStar
             matrixStar = new Matrix();
-            //rotate the matrix (in this case bulletRec) about its centre
+            //rotate the matrix (in this case starRec) about its centre
             matrixStar.RotateAt(rotationAngle, centreStar);
-            //Set the current draw location to the rotated matrix point i.e. where alienRec is now
+            //Set the current draw location to the rotated matrix point i.e. where starRec is now
             g.Transform = matrixStar;
-            //Draw the bullet
+            //Draw the star
             g.DrawImage(starImg, starRec);
         }
     }
