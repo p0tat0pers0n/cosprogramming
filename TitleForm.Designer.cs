@@ -126,7 +126,7 @@ namespace _201COS_Game
             // 
             // PicBullet
             // 
-            this.PicBullet.Image = global::_201COS_Game.Properties.Resources.bullet;
+            this.PicBullet.Image = global::_201COS_Game.Properties.Resources.newbullet;
             this.PicBullet.Location = new System.Drawing.Point(170, 478);
             this.PicBullet.Name = "PicBullet";
             this.PicBullet.Size = new System.Drawing.Size(12, 67);

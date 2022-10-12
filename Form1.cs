@@ -39,10 +39,10 @@ namespace _201COS_Game
         // afkTimer - stores how long since the player has pressed and released a keyboard button
         // blinkCoolDown - stops the move text from blinking too often
 
-        string filePath, fileName, pathString, playerName;
-        // filePath - stores where the highscore save file is going
+        string filePath, altFilePath, fileName, pathString, altPathString, playerName;
+        // filePath, altFilePath - stores where the highscore save file is going
         // fileName - defines what the file's name is going to be
-        // pathString - stores a combination of the filePath and the fileName for easy saving
+        // pathString, altPathString - stores a combination of the filePath and the fileName for easy saving
 
         Player player = new Player();// creates a new instance of the player class
 
@@ -76,6 +76,9 @@ namespace _201COS_Game
             fileName = "angrynerdssave.txt";
             pathString = System.IO.Path.Combine(filePath, fileName);
 
+            altFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);// Gets the path to the documents folder
+            altPathString = System.IO.Path.Combine(altFilePath, fileName);
+
             powerUpImg = Properties.Resources.powerupIcon;// Sets the powerup icon image
             powerUpRec = new Rectangle(ClientSize.Width - 100, ClientSize.Height - 150, 36, 56);// Creates the rectangle to hold the powerup icon
 
@@ -85,7 +88,14 @@ namespace _201COS_Game
             // Displays highscore on menubar
             if (File.Exists(pathString))
             {
-                string[] saveFileData = System.IO.File.ReadAllLines(pathString);
+                string[] saveFileData;
+                if (File.Exists(@"H:\"))// If the Home folder is there check if there is a save there
+                { 
+                    saveFileData = System.IO.File.ReadAllLines(pathString);
+                }else
+                {
+                    saveFileData = System.IO.File.ReadAllLines(altPathString);
+                }
                 MnuHighScore.Text = "Highscore: " + saveFileData[2];
             }
             MessageBox.Show("Please enter a name to begin.\nThen press the start button.", "Instructions");
@@ -94,14 +104,21 @@ namespace _201COS_Game
         private void MnuHighScore_Click(object sender, EventArgs e)
         {
             // The menu button which displays the highscore
-            if (File.Exists(pathString))
+            if (File.Exists(pathString) || File.Exists(altPathString))
             {
                 string[] resetSaveData = { "null", "0", "0" };// Sets the data to overwrite the current save file
                 DialogResult result;
                 result = MessageBox.Show("Would you like to reset your save file?", "IMPORTANT", MessageBoxButtons.YesNo); // Checks if save exists and if so asks the player if they want to delete it
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    File.WriteAllLines(pathString, resetSaveData);
+                    if (File.Exists(@"H:\"))// If the Home folder is there remove the save from there
+                    {
+                        File.WriteAllLines(pathString, resetSaveData);
+                    }
+                    else
+                    {
+                        File.WriteAllLines(altPathString, resetSaveData);
+                    }
                     MnuHighScore.Text = "Highscore: 0";
                 }
             }
@@ -149,12 +166,25 @@ namespace _201COS_Game
                     if (Convert.ToInt32(oldSaveData[2]) < Convert.ToInt32(saveData[2]))
                     {
                         //High score saving
-                        File.WriteAllLines(pathString, saveData);
+                        if (File.Exists(@"H:\"))// If the Home folder is there save there first
+                        {
+                            File.WriteAllLines(pathString, saveData);
+                        }else// Else save in the documents folder
+                        {
+                            File.WriteAllLines(altPathString, saveData);
+                        }
                         if (!onlyHighscore) { MessageBox.Show("Congratulations!\nYou've gotten a new highscore of: " + score.ToString() + " kills in " + timeElapsed.ToString() + " seconds", "New Highscore!"); }
                     }
                 }else
                 {
-                    File.WriteAllLines(pathString, saveData);// Write the save if another one does not exist
+                    // Write the save if another one does not exist
+                    if (File.Exists(@"H:\"))// If the Home folder is there save there first
+                    {
+                        File.WriteAllLines(pathString, saveData);
+                    }else// Else save in the documents folder
+                    {
+                        File.WriteAllLines(altPathString, saveData);
+                    }
                 }
             }
             Application.Exit();

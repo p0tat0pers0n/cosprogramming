@@ -20,7 +20,7 @@ namespace _201COS_Game
             bulletY = playerRec.Y;
             width = 10;
             height = 60;
-            bullet = Properties.Resources.bullet;
+            bullet = Properties.Resources.newbullet;
             bulletRec = new Rectangle(playerX+50, playerY+50, width, height);
 
             //this code works out the speed of the bullet to be used in the moveBullet method
