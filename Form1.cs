@@ -137,11 +137,12 @@ namespace _201COS_Game
             // This function allows you to hold down the left mouse button to shoot slowly compared to clicking rapidly
             if (mouseState && !powerUpStatus && mouseHeldTime > 3)
             {
-                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
+                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y, timeElapsed));
                 // Adds a bullet with the following information
                 // PlayerRec - for getting the player width and height
                 // player.angleCalc - for rotating the bullet when the player is rotated
                 // player.x and player.y - For getting the spawn-in position for the bullets
+                // timeElapsed - Allows the bullet to be removed if it hasn't previously to remove lag
             }
         }
 
@@ -223,7 +224,7 @@ namespace _201COS_Game
             }
             if (mouseState && powerUpStatus)
             {
-                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y)); // This is the powerup which is gained from the shooting star
+                bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y, timeElapsed)); // This is the powerup which is gained from the shooting star
             }
             foreach (Bullet b in bullets.ToList())
             {
@@ -246,6 +247,10 @@ namespace _201COS_Game
                     if (b.bulletRec.Location.Y > 490 || b.bulletRec.Location.Y < 0)
                     {
                         bullets.Remove(b);
+                    }
+                    if (timeElapsed - b.startingGameTime >= 10)
+                    {
+                        bullets.Remove(b);// Removes the bullet if it has been active for longer than 10 seconds
                     }
                 }
             }
@@ -294,7 +299,7 @@ namespace _201COS_Game
         private void PnlGame_MouseDown(object sender, MouseEventArgs e)
         {
             // Generates a bullet when the player clicks
-            bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y));
+            bullets.Add(new Bullet(PlayerRec, (int)player.angleCalc + 90, player.x, player.y, timeElapsed));
             mouseState = true;
         }
 
@@ -318,14 +323,14 @@ namespace _201COS_Game
 
         private void TmrEnemySpawn_Tick(object sender, EventArgs e)
         {
-            aliens.Add(new Alien()); // Adds an alien every tick and occasionally adds a bomber or shooting star
+            aliens.Add(new Alien(timeElapsed)); // Adds an alien every tick and occasionally adds a bomber or shooting star
             if (bomberChance.Next(1, 10) == 1)
             {
-                bombers.Add(new Bomber());
+                bombers.Add(new Bomber(timeElapsed));
             }
             if (starChance.Next(1, 20) == 3)
             {
-                stars.Add(new ShootingStar());
+                stars.Add(new ShootingStar(timeElapsed));
             }
         }
 
@@ -337,7 +342,7 @@ namespace _201COS_Game
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
-            player.MoveRotatePlayer(mouseX, mouseY, PlayerRec, g, up, down, left, right); // Moves and rotates the player according to the mouse down and mouse x and y
+            player.MoveRotatePlayer(mouseX, mouseY, g, up, down, left, right); // Moves and rotates the player according to the mouse down and mouse x and y
 
             if (powerUpStatus)
             {
@@ -355,7 +360,7 @@ namespace _201COS_Game
             {
                 s.drawStar(g);
                 s.moveStar();
-                if (player.playerRec.IntersectsWith(s.starRec)) // Checks if the player collides with the star and if so gives them the powerup
+                if (Math.Abs(player.x - s.starX) < 50 && Math.Abs(player.y - s.starY) < 50) // Checks if the player collides with the star and if so gives them the powerup
                 {
                     stars.Remove(s);
                     powerUpTime = 0;
@@ -371,6 +376,10 @@ namespace _201COS_Game
                 if (s.starRec.Location.Y > 490 || s.starRec.Location.Y < 0)
                 {
                     stars.Remove(s);// Removes the star if its off-screen
+                }
+                if (timeElapsed - s.startingGameTime > 15)
+                {
+                    stars.Remove(s);// Removes the star if its been active for longer than 15 seconds
                 }
             }
 
@@ -390,6 +399,10 @@ namespace _201COS_Game
                     aliens.Remove(a);// Removes the alien if its off-screen and removes a life
                     lives--;
                 }
+                if (timeElapsed - a.startingGameTime >= 20)
+                {
+                    aliens.Remove(a);// Removes the alien if it has been active for longer than 20 seconds
+                }
 
                 LblLives.Text = lives.ToString();
                 if (lives <= 0 && !endGame) // Checks if the game is over
@@ -406,7 +419,15 @@ namespace _201COS_Game
 
                 if (t.bomberY >= 225 && t.bomberY <= 245)// Drops a bomb when the bomber is half way up the screen
                 {
-                    bombs.Add(new Bomb(t.leftOrRight));
+                    bombs.Add(new Bomb(t.leftOrRight, timeElapsed));
+                }
+                if (timeElapsed - t.startingGameTime >= 10)
+                {
+                    bombers.Remove(t);// Removes the bomber if it has been active for longer than 10 seconds
+                }
+                if (t.bomberY < -5)
+                {
+                    bombers.Remove(t);// Removes the bomber if it goes off screen
                 }
             }
 
@@ -417,6 +438,10 @@ namespace _201COS_Game
                 if (d.bombTimer >= 77)
                 {
                     bombs.Remove(d); // Removes the bomb after it explodes
+                }
+                if (timeElapsed - d.startingGameTime >= 10)
+                {
+                    bombs.Remove(d);// Removes the bomb if it has been active for longer than 10 seconds
                 }
 
                 foreach (Alien a in aliens.ToList())

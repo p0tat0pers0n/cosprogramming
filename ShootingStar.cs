@@ -10,7 +10,7 @@ namespace _201COS_Game
 {
     class ShootingStar
     {
-        public int starX, starY, width, height, rotationAngle, side;
+        public int starX, starY, width, height, rotationAngle, side, startingGameTime;
         // starX, starY - the location of the star
         // width, height - the size of the star
         // rotationAngle - changes depending on which side it spawns on
@@ -20,11 +20,12 @@ namespace _201COS_Game
         Image starImg = Properties.Resources.shootingStar;// image for the star
         public Matrix matrixStar;// to rotate the star depending on the side it spawns on
         Point centreStar;// the point where the star rotates around
-        public ShootingStar()
+        public ShootingStar(int gameTime)
         {
             width = 75;
             height = 125;
             rotationAngle = 90;// default angle
+            startingGameTime = gameTime;
 
             spawnSide = new Random();
             spawnY = new Random();

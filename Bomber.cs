@@ -11,7 +11,7 @@ namespace _201COS_Game
     class Bomber
     {
         Random spawnSide; 
-        public int bomberX, bomberY, width, height, leftOrRight;
+        public int bomberX, bomberY, width, height, leftOrRight, startingGameTime;
         // bomberX, bomberY - stores the position of the bomber
         // width, height - the width and height of the bomber
         // leftOrRight - stores which side of the bottom it spawns on
@@ -19,12 +19,13 @@ namespace _201COS_Game
         Image bomberImg;// Defines the bomber's image
         Matrix matrixBomber;// For rotation of the bomber to avoid it rotating with the bullet
         Point centreBomber;// Centre of the bomber
-        public Bomber()
+        public Bomber(int gameTime)
         {
             width = 125;
             height = 125;
             bomberX = 100;
             bomberY = 490;
+            startingGameTime = gameTime;
             spawnSide = new Random();
             bomberImg = Properties.Resources.taiFighter;
             bomberRec = new Rectangle(bomberX, bomberY, width, height);

@@ -8,19 +8,20 @@ namespace _201COS_Game
     {
         public Rectangle bulletRec;
         public Image bullet;
-        public int bulletX, bulletY, width, height;
+        public int bulletX, bulletY, width, height, startingGameTime;
         public int bulletRotated;
         public double xSpeed, ySpeed;
         public Matrix matrixBullet;//matrix to enable us to rotate bullet in the same angle as the player
         Point centreBullet;//centre of bullet
 
-        public Bullet(Rectangle playerRec, int bulletRotate, int playerX, int playerY)
+        public Bullet(Rectangle playerRec, int bulletRotate, int playerX, int playerY, int gameTime)
         {
             bulletX = playerRec.X + 37; // move bullet to middle of player
             bulletY = playerRec.Y;
             width = 10;
             height = 60;
             bullet = Properties.Resources.newbullet;
+            startingGameTime = gameTime;
             bulletRec = new Rectangle(playerX+50, playerY+50, width, height);
 
             //this code works out the speed of the bullet to be used in the moveBullet method

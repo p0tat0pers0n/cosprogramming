@@ -10,7 +10,7 @@ namespace _201COS_Game
 {
     class Bomb
     {
-        public int bombTimer, bombX, bombY, width, height, bomberSpawnSide;
+        public int bombTimer, bombX, bombY, width, height, bomberSpawnSide, startingGameTime;
         // bombTimer - stores how long the bomb has been on screen
         // bombX, bombY - stores where the bomb is so that it can be drawn
         // width, height - defines how large the bomb will be
@@ -21,11 +21,12 @@ namespace _201COS_Game
         public Image bombImg;// Defines an image so the bomb looks good
         public Matrix matrixBomb;// Makes sure the bomb is not rotated in line with the bullets
         Point centreBomb;// Creates a centre so the bomb can be matrix rotated around it
-        public Bomb(int leftOrRight)
+        public Bomb(int leftOrRight, int gameTime)
         {
             // Initial values
             width = 75;
             height = 125;
+            startingGameTime = gameTime;
             bombY = 245;
             bombGaveDamage = false;
             bomberSpawnSide = leftOrRight;// Brought from Bomber.cs to decide which side for it to spawn on

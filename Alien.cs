@@ -11,7 +11,7 @@ namespace _201COS_Game
     class Alien
     {
         public Rectangle alienRec;// Defines the rectangle for the alien
-        public int alienX,alienY,width,height,side,xSpawn,ySpawn;
+        public int alienX,alienY,width,height,side,xSpawn,ySpawn,startingGameTime;
         // alienX, alienY - Stores where the alien is
         // width, height - Stores how large the alien is going to be
         // side - Stores which side the alien will be on/where it moves
@@ -22,11 +22,11 @@ namespace _201COS_Game
         Random ySpawnOffset;// If it spawns on the left or right where will it spawn along it
         Matrix matrixAlien;// Stops the alien from being rotated due to the bullets
         Point centreAlien;// Creates a centre for the alien to rotate around
-        public Alien()
+        public Alien(int gameTime)
         {
             width = 75;
             height = 75;
-
+            startingGameTime = gameTime;
             alienRec = new Rectangle(alienX,alienY,width,height);
             alienImg = Properties.Resources.alien;
             sideChance = new Random();

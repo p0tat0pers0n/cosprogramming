@@ -43,13 +43,13 @@ namespace _201COS_Game
             this.TextTime = new System.Windows.Forms.Label();
             this.TmrTime = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
+            this.TextMove = new System.Windows.Forms.Label();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.MnuStart = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuPause = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuHighScore = new System.Windows.Forms.ToolStripMenuItem();
             this.TmrPowerUp = new System.Windows.Forms.Timer(this.components);
             this.TmrSlowShoot = new System.Windows.Forms.Timer(this.components);
-            this.TextMove = new System.Windows.Forms.Label();
             this.PnlGame.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -175,6 +175,19 @@ namespace _201COS_Game
             this.PnlGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseMove);
             this.PnlGame.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PnlGame_MouseUp);
             // 
+            // TextMove
+            // 
+            this.TextMove.AutoSize = true;
+            this.TextMove.BackColor = System.Drawing.Color.Transparent;
+            this.TextMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 100F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TextMove.ForeColor = System.Drawing.Color.Red;
+            this.TextMove.Location = new System.Drawing.Point(135, 175);
+            this.TextMove.Name = "TextMove";
+            this.TextMove.Size = new System.Drawing.Size(459, 153);
+            this.TextMove.TabIndex = 0;
+            this.TextMove.Text = "MOVE";
+            this.TextMove.Visible = false;
+            // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -219,19 +232,6 @@ namespace _201COS_Game
             this.TmrSlowShoot.Enabled = true;
             this.TmrSlowShoot.Interval = 200;
             this.TmrSlowShoot.Tick += new System.EventHandler(this.TmrSlowShoot_Tick);
-            // 
-            // TextMove
-            // 
-            this.TextMove.AutoSize = true;
-            this.TextMove.BackColor = System.Drawing.Color.Transparent;
-            this.TextMove.Font = new System.Drawing.Font("Tw Cen MT Condensed Extra Bold", 100F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TextMove.ForeColor = System.Drawing.Color.Red;
-            this.TextMove.Location = new System.Drawing.Point(135, 175);
-            this.TextMove.Name = "TextMove";
-            this.TextMove.Size = new System.Drawing.Size(372, 158);
-            this.TextMove.TabIndex = 0;
-            this.TextMove.Text = "MOVE";
-            this.TextMove.Visible = false;
             // 
             // FrmGame
             // 

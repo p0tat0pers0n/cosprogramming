@@ -16,21 +16,20 @@ namespace _201COS_Game
         public int x, y;// For movement
         Bitmap PlayerImg;// So it can be modified
         public float angleCalc;// The angle it needs to be rotated
-        public Rectangle playerRec;// To allow star collection
+        public Rectangle playerRec;// To hold the player
 
         //Create a constructor (initialises the values of the fields)
         public Player()
         {
             playerImg = Properties.Resources.player2;// Sets the player image 
         }
-        public void MoveRotatePlayer(float mouseX, float mouseY, Rectangle PlayerRec, Graphics g, bool up, bool down, bool left, bool right)
+        public void MoveRotatePlayer(float mouseX, float mouseY, Graphics g, bool up, bool down, bool left, bool right)
         {
             // moves the player depending on the bools status
             if (up) { y -= 5; }
             if (down) { y += 5; }
             if (left) { x -= 5; }
             if (right) { x += 5; }
-            playerRec = PlayerRec;// Required for the star collection
 
             playerRec.Location = new Point(x, y);// Sets the player's location
 
