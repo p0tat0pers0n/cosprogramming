@@ -16,7 +16,6 @@ namespace _201COS_Game
         public int x, y;// For movement
         Bitmap PlayerImg;// So it can be modified
         public float angleCalc;// The angle it needs to be rotated
-        public Rectangle playerRec;// To hold the player
 
         //Create a constructor (initialises the values of the fields)
         public Player()
@@ -25,7 +24,7 @@ namespace _201COS_Game
             y = 210;
             playerImg = Properties.Resources.player2;// Sets the player image 
         }
-        public void MoveRotatePlayer(float mouseX, float mouseY, Graphics g)
+        public void MoveRotatePlayer(Rectangle playerRec, float mouseX, float mouseY, Graphics g)
         {
             playerRec.Location = new Point(x, y);// Sets the player's location
 

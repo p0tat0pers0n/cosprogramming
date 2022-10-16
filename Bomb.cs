@@ -62,7 +62,7 @@ namespace _201COS_Game
 
         public void drawBomb(Graphics g)
         {   
-            if (bombTimer < 66)// Makes sure it does not interfere with the explosion
+            if (bombTimer < 67)// Makes sure it does not interfere with the explosion
             {
                 //centre bomb 
                 centreBomb = new Point(bombX, bombY);

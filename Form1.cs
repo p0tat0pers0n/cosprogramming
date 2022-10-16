@@ -86,10 +86,10 @@ namespace _201COS_Game
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
 
             // Displays highscore on menubar
-            if (File.Exists(pathString))
+            if (File.Exists(pathString) || File.Exists(altPathString))
             {
                 string[] saveFileData;
-                if (File.Exists(@"H:\"))// If the Home folder is there check if there is a save there
+                if (Directory.Exists(@"H:"))// If the Home folder is there check if there is a save there
                 { 
                     saveFileData = System.IO.File.ReadAllLines(pathString);
                 }else
@@ -228,7 +228,6 @@ namespace _201COS_Game
             }
             foreach (Bullet b in bullets.ToList())
             {
-
                 foreach (Alien a in aliens.ToList())
                 {
                     if (b.bulletRec.IntersectsWith(a.alienRec))
@@ -342,7 +341,7 @@ namespace _201COS_Game
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
-            player.MoveRotatePlayer(mouseX, mouseY, g); // Sets the player's new position and rotates the player according to the mouse x and y
+            player.MoveRotatePlayer(PlayerRec, mouseX, mouseY, g); // Sets the player's new position and rotates the player according to the mouse x and y
 
             if (powerUpStatus)
             {
@@ -360,7 +359,7 @@ namespace _201COS_Game
             {
                 s.drawStar(g);
                 s.moveStar();
-                if (Math.Abs(player.x - s.starX) < 50 && Math.Abs(player.y - s.starY) < 50) // Checks if the player collides with the star and if so gives them the powerup
+                if (Math.Abs(player.x - s.starX) < 75 && Math.Abs(player.y - s.starY) < 55) // Checks if the player collides with the star and if so gives them the powerup
                 {
                     stars.Remove(s);
                     powerUpTime = 0;
@@ -452,7 +451,7 @@ namespace _201COS_Game
                     }
                 }
 
-                if (d.bombRec.IntersectsWith(player.playerRec) && d.bombTimer >= 66 && d.bombGaveDamage == false)
+                if (Math.Abs(player.x - d.bombX) < 50 && Math.Abs(player.y - d.bombY) < 50 && d.bombTimer >= 66 && d.bombGaveDamage == false) // Checks if the player collides with the bomb and if so removes lives
                 {
                     d.bombGaveDamage = true;// Stops the bomb from removing too many lives
                     lives--;// Removes player lives if its touching the bomb when it explodes
