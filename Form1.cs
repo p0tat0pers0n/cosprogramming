@@ -202,7 +202,7 @@ namespace _201COS_Game
 
         private void FrmGame_Load(object sender, EventArgs e)
         {
-            PlayerRec = new Rectangle(278, 210, 100, 100);
+            PlayerRec = new Rectangle(280, 210, 100, 100);
         }
 
         private void TmrPowerUp_Tick(object sender, EventArgs e)
@@ -342,7 +342,7 @@ namespace _201COS_Game
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
-            player.MoveRotatePlayer(mouseX, mouseY, g, up, down, left, right); // Moves and rotates the player according to the mouse down and mouse x and y
+            player.MoveRotatePlayer(mouseX, mouseY, g); // Sets the player's new position and rotates the player according to the mouse x and y
 
             if (powerUpStatus)
             {
@@ -467,14 +467,17 @@ namespace _201COS_Game
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
            if (!afkTimerCheck) { afkTimer = 0; afkTimerCheck = true; isAFK = false; }// Checks if the player has pressed a key and marks them not afk
+
+           e.Handled = true;
+           if (gameState) { e.SuppressKeyPress = true; }// If the game is running stop the alert ding sound for every keypress
         }
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
-            //Stops player from going off-screen
-            if (player.x > ClientSize.Width - 120) { player.x -= 10; }
-            if (player.x < 0) { player.x += 10; }
-            if (player.y > ClientSize.Height - 170) { player.y -= 10; }
-            if (player.y < 0) { player.y += 10; }
+            // moves the player depending on the bools status and stops them from going off screen
+            if (up && !(player.y < 0)) { player.y -= 5; }
+            if (down && !(player.y > ClientSize.Height - 170)) { player.y += 5; }
+            if (left && !(player.x < 0)) { player.x -= 5; }
+            if (right && !(player.x > ClientSize.Width - 120)) { player.x += 5; }
 
             PnlGame.Invalidate();
             afkTimer++;// If the player is currently afk

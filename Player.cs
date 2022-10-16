@@ -21,16 +21,12 @@ namespace _201COS_Game
         //Create a constructor (initialises the values of the fields)
         public Player()
         {
+            x = 280;
+            y = 210;
             playerImg = Properties.Resources.player2;// Sets the player image 
         }
-        public void MoveRotatePlayer(float mouseX, float mouseY, Graphics g, bool up, bool down, bool left, bool right)
+        public void MoveRotatePlayer(float mouseX, float mouseY, Graphics g)
         {
-            // moves the player depending on the bools status
-            if (up) { y -= 5; }
-            if (down) { y += 5; }
-            if (left) { x -= 5; }
-            if (right) { x += 5; }
-
             playerRec.Location = new Point(x, y);// Sets the player's location
 
             //get the direction of the mouse by looking at the position of the picture box in relation to the mouse pointer
