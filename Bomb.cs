@@ -62,18 +62,16 @@ namespace _201COS_Game
 
         public void drawBomb(Graphics g)
         {   
-            if (bombTimer < 67)// Makes sure it does not interfere with the explosion
-            {
-                //centre bomb 
-                centreBomb = new Point(bombX, bombY);
-                //instantiate a Matrix object called matrixBomb
-                matrixBomb = new Matrix();
-                //rotate the matrix (in this case bombRec) about its centre
-                matrixBomb.RotateAt(0, centreBomb);
-                //Set the current draw location to the rotated matrix point i.e. where bombRec is now
-                g.Transform = matrixBomb;
-                //Draw the bullet
-            }
+            // Ensures the bomb does not rotate with the bullets
+            //centre bomb 
+            centreBomb = new Point(bombX, bombY);
+            //instantiate a Matrix object called matrixBomb
+            matrixBomb = new Matrix();
+            //rotate the matrix (in this case bombRec) about its centre
+            matrixBomb.RotateAt(0, centreBomb);
+            //Set the current draw location to the rotated matrix point i.e. where bombRec is now
+            g.Transform = matrixBomb;
+            //Draw the bullet
             if (bombTimer < 76)// Stops drawing the bomb after its exploded
             {
                 g.DrawImage(bombImg, bombRec);// Draws the bomb

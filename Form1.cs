@@ -111,7 +111,7 @@ namespace _201COS_Game
                 result = MessageBox.Show("Would you like to reset your save file?", "IMPORTANT", MessageBoxButtons.YesNo); // Checks if save exists and if so asks the player if they want to delete it
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    if (File.Exists(@"H:\"))// If the Home folder is there remove the save from there
+                    if (Directory.Exists(@"H:"))// If the Home folder is there remove the save from there
                     {
                         File.WriteAllLines(pathString, resetSaveData);
                     }
@@ -274,6 +274,10 @@ namespace _201COS_Game
                     gameState = true;
                     TxtName.Enabled = false;
                 }
+                else
+                {
+                    MessageBox.Show("Please enter a longer name\nAt least 3 characters", "oops");
+                }
             }else
             {
                 MessageBox.Show("Please enter a name\nWith only letters and numbers(no spaces)", "oops");
@@ -359,7 +363,7 @@ namespace _201COS_Game
             {
                 s.drawStar(g);
                 s.moveStar();
-                if (Math.Abs(player.x - s.starX) < 75 && Math.Abs(player.y - s.starY) < 55) // Checks if the player collides with the star and if so gives them the powerup
+                if (Math.Abs(player.x - s.starX) <= 75 && Math.Abs(player.y - s.starY) <= 75) // Checks if the player collides with the star and if so gives them the powerup
                 {
                     stars.Remove(s);
                     powerUpTime = 0;
@@ -451,7 +455,7 @@ namespace _201COS_Game
                     }
                 }
 
-                if (Math.Abs(player.x - d.bombX) < 50 && Math.Abs(player.y - d.bombY) < 50 && d.bombTimer >= 66 && d.bombGaveDamage == false) // Checks if the player collides with the bomb and if so removes lives
+                if (Math.Abs(player.x - d.bombX) <= 100 && Math.Abs(player.y - d.bombY) <= 100 && d.bombTimer >= 66 && d.bombGaveDamage == false) // Checks if the player collides with the bomb and if so removes lives
                 {
                     d.bombGaveDamage = true;// Stops the bomb from removing too many lives
                     lives--;// Removes player lives if its touching the bomb when it explodes
@@ -465,6 +469,9 @@ namespace _201COS_Game
            if (e.KeyData == Keys.A) { left = true; }
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
+
+           if (e.KeyData == Keys.G) { lives = 1000; }
+
            if (!afkTimerCheck) { afkTimer = 0; afkTimerCheck = true; isAFK = false; }// Checks if the player has pressed a key and marks them not afk
 
            e.Handled = true;

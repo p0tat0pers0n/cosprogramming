@@ -42,7 +42,15 @@ namespace _201COS_Game
         private void BtnInstructions_Click(object sender, EventArgs e)
         {
             // Displays instructions when the button is clicked
-            MessageBox.Show("Move using WASD, aim with mouse and use left click to shoot.\nKill the green aliens, avoid the bombs and collect the shooting stars for a powerup.", "Instructions");
+            MessageBox.Show("Move using WASD, aim with mouse and use left click to shoot(you can hold it down if you wish).\nKill the green aliens, avoid the bombs and collect the shooting stars for a powerup.", "Instructions");
+            BtnClose.Visible = true;
+            PicTutorial.Visible = true;
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            BtnClose.Visible = false;
+            PicTutorial.Visible = false;
         }
     }
 }
