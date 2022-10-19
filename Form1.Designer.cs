@@ -44,14 +44,14 @@ namespace _201COS_Game
             this.TmrTime = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
             this.TextMove = new System.Windows.Forms.Label();
-            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.MnuStart = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuPause = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuHighScore = new System.Windows.Forms.ToolStripMenuItem();
             this.TmrPowerUp = new System.Windows.Forms.Timer(this.components);
             this.TmrSlowShoot = new System.Windows.Forms.Timer(this.components);
             this.PnlGame.SuspendLayout();
-            this.menuStrip.SuspendLayout();
+            this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // TextName
@@ -188,17 +188,17 @@ namespace _201COS_Game
             this.TextMove.Text = "MOVE";
             this.TextMove.Visible = false;
             // 
-            // menuStrip
+            // MenuStrip
             // 
-            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MnuStart,
             this.MnuPause,
             this.MnuHighScore});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(684, 24);
-            this.menuStrip.TabIndex = 9;
-            this.menuStrip.Text = "menuStrip";
+            this.MenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.MenuStrip.Name = "MenuStrip";
+            this.MenuStrip.Size = new System.Drawing.Size(684, 24);
+            this.MenuStrip.TabIndex = 9;
+            this.MenuStrip.Text = "menuStrip";
             // 
             // MnuStart
             // 
@@ -248,11 +248,11 @@ namespace _201COS_Game
             this.Controls.Add(this.TxtName);
             this.Controls.Add(this.TextName);
             this.Controls.Add(this.PnlGame);
-            this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.MenuStrip);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.KeyPreview = true;
-            this.MainMenuStrip = this.menuStrip;
+            this.MainMenuStrip = this.MenuStrip;
             this.MaximizeBox = false;
             this.Name = "FrmGame";
             this.Text = "Angry Nerds";
@@ -262,8 +262,8 @@ namespace _201COS_Game
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmGame_KeyUp);
             this.PnlGame.ResumeLayout(false);
             this.PnlGame.PerformLayout();
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
+            this.MenuStrip.ResumeLayout(false);
+            this.MenuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,7 +284,7 @@ namespace _201COS_Game
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Label TextTime;
         private System.Windows.Forms.Timer TmrTime;
-        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem MnuStart;
         private System.Windows.Forms.ToolStripMenuItem MnuPause;
         private System.Windows.Forms.Timer TmrPowerUp;

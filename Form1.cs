@@ -167,7 +167,7 @@ namespace _201COS_Game
                     if (Convert.ToInt32(oldSaveData[2]) < Convert.ToInt32(saveData[2]))
                     {
                         //High score saving
-                        if (File.Exists(@"H:\"))// If the Home folder is there save there first
+                        if (Directory.Exists(@"H:"))// If the Home folder is there save there first
                         {
                             File.WriteAllLines(pathString, saveData);
                         }else// Else save in the documents folder
@@ -179,7 +179,7 @@ namespace _201COS_Game
                 }else
                 {
                     // Write the save if another one does not exist
-                    if (File.Exists(@"H:\"))// If the Home folder is there save there first
+                    if (Directory.Exists(@"H:"))// If the Home folder is there save there first
                     {
                         File.WriteAllLines(pathString, saveData);
                     }else// Else save in the documents folder
@@ -258,9 +258,9 @@ namespace _201COS_Game
         private void MnuStart_Click(object sender, EventArgs e)
         {
             playerName = TxtName.Text;
-            if (Regex.IsMatch(playerName, @"^[a-zA-Z0-9]+$")) // Checks if the name contains only letters and numbers
+            if (Regex.IsMatch(playerName, @"^[a-zA-Z]+$")) // Checks if the name contains only letters
             {
-                if (TxtName.Text.Count() > 3 && TxtName.Text != "Please input your name")
+                if (TxtName.Text.Count() >= 3 && TxtName.Text != "Please input your name")
                 {
                     if (!gameState)// Starts the game
                     {
@@ -280,7 +280,7 @@ namespace _201COS_Game
                 }
             }else
             {
-                MessageBox.Show("Please enter a name\nWith only letters and numbers(no spaces)", "oops");
+                MessageBox.Show("Please enter a name\nWith only letters (no spaces)", "oops");
             }
         }
 
@@ -469,8 +469,6 @@ namespace _201COS_Game
            if (e.KeyData == Keys.A) { left = true; }
            if (e.KeyData == Keys.S) { down = true; }
            if (e.KeyData == Keys.D) { right = true; }
-
-           if (e.KeyData == Keys.G) { lives = 1000; }
 
            if (!afkTimerCheck) { afkTimer = 0; afkTimerCheck = true; isAFK = false; }// Checks if the player has pressed a key and marks them not afk
 
