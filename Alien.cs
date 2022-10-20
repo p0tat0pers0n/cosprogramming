@@ -10,90 +10,93 @@ namespace _201COS_Game
 {
     class Alien
     {
-        public Rectangle alienRec;// Defines the rectangle for the alien
-        public int alienX,alienY,width,height,side,xSpawn,ySpawn,startingGameTime;
-        // alienX, alienY - Stores where the alien is
-        // width, height - Stores how large the alien is going to be
-        // side - Stores which side the alien will be on/where it moves
+        public Rectangle AlienRec;// Defines the rectangle for the alien
+        public int StartingGameTime;
 
-        Image alienImg;
-        Random sideChance;// Stores its result in the int side to decide which side it spawns on or moves
-        Random xSpawnOffset;// If it spawns on the top or bottom where will it spawn along it
-        Random ySpawnOffset;// If it spawns on the left or right where will it spawn along it
-        Matrix matrixAlien;// Stops the alien from being rotated due to the bullets
-        Point centreAlien;// Creates a centre for the alien to rotate around
-        public Alien(int gameTime)
+        int _alienX, _alienY, _width, _height, _side, _xSpawn, _ySpawn;
+        // _alienX, _alienY - Stores where the alien is
+        // width, height - Stores how large the alien is going to be
+        // _side - Stores which _side the alien will be on/where it moves
+        // xSpawn, ySpawn - Stores the random number where the alien spawns
+
+        Image _alienImg;
+        Random _sideChance;// Stores its result in the int _side to decide which _side it spawns on or moves
+        Random _xSpawnOffset;// If it spawns on the top or bottom where will it spawn along it
+        Random _ySpawnOffset;// If it spawns on the left or right where will it spawn along it
+        Matrix _matrixAlien;// Stops the alien from being rotated due to the bullets
+        Point _centreAlien;// Creates a centre for the alien to rotate around
+        public Alien(int _gameTime)
         {
-            width = 75;
-            height = 75;
-            startingGameTime = gameTime;
-            alienRec = new Rectangle(alienX,alienY,width,height);
-            alienImg = Properties.Resources.alien;
-            sideChance = new Random();
-            xSpawnOffset = new Random();
-            ySpawnOffset = new Random();
+            _width = 75;
+            _height = 75;
+            StartingGameTime = _gameTime;
+            AlienRec = new Rectangle(_alienX, _alienY, _width, _height);
+            _alienImg = Properties.Resources.alien;
+            _sideChance = new Random();
+            _xSpawnOffset = new Random();
+            _ySpawnOffset = new Random();
             newAlien();
         }
 
         public void newAlien()
         {
             // Randomises the side that it spawns on and the x and y spawn offset
-            xSpawn = xSpawnOffset.Next(50, 600);
-            ySpawn = ySpawnOffset.Next(50, 390);
-            side = sideChance.Next(1, 5);
+            _xSpawn = _xSpawnOffset.Next(50, 600);
+            _ySpawn = _ySpawnOffset.Next(50, 390);
+            _side = _sideChance.Next(1, 5);
 
-            if (side == 1)
+            if (_side == 1)
             {
                 //spawns on top going down
-                alienX = xSpawn;
-                alienY = 10;
-                alienRec.Location = new Point(xSpawn, 10);
+                _alienX = _xSpawn;
+                _alienY = 10;
+                AlienRec.Location = new Point(_xSpawn, 10);
             }
-            if (side == 2)
+            if (_side == 2)
             {
                 //spawns on right going left
-                alienX = 650;
-                alienY = ySpawn;
-                alienRec.Location = new Point(650, ySpawn);
+                _alienX = 650;
+                _alienY = _ySpawn;
+                AlienRec.Location = new Point(650, _ySpawn);
             }
-            if (side == 3)
+            if (_side == 3)
             {
                 //spawns on bottom going up
-                alienX = xSpawn;
-                alienY = 450;
-                alienRec.Location = new Point(xSpawn, 450);
+                _alienX = _xSpawn;
+                _alienY = 450;
+                AlienRec.Location = new Point(_xSpawn, 450);
             }
-            if (side == 4)
+            if (_side == 4)
             {
                 //spawns on left going right
-                alienX = 10;
-                alienY = ySpawn;
-                alienRec.Location = new Point(10, ySpawn);
+                _alienX = 10;
+                _alienY = _ySpawn;
+                AlienRec.Location = new Point(10, _ySpawn);
             }
         }
 
         public void moveAlien()
         {
             // Moves the alien depending on its spawn side
-            if (side == 1) { alienY += 5; }
-            if (side == 2) { alienX -= 5; }
-            if (side == 3) { alienY -= 5; }
-            if (side == 4) { alienX += 5; }
-            alienRec.Location = new Point(alienX, alienY);
+            if (_side == 1) { _alienY += 5; }
+            if (_side == 2) { _alienX -= 5; }
+            if (_side == 3) { _alienY -= 5; }
+            if (_side == 4) { _alienX += 5; }
+            AlienRec.Location = new Point(_alienX, _alienY);
         }
 
         public void draw(Graphics g)
         {
             //centre bullet 
-            centreAlien = new Point(alienX, alienY);
+            _centreAlien = new Point(_alienX, _alienY);
             //instantiate a Matrix object called matrixAlien
-            matrixAlien = new Matrix();
-            //rotate the matrix (in this case alienRec) about its centre
-            matrixAlien.RotateAt(0, centreAlien);
-            //Set the current draw location to the rotated matrix point i.e. where alienRec is now
-            g.Transform = matrixAlien;
+            _matrixAlien = new Matrix();
+            //rotate the matrix (in this case AlienRec) about its centre
+            _matrixAlien.RotateAt(0, _centreAlien);
+            //Set the current draw location to the rotated matrix point i.e. where AlienRec is now
+            g.Transform = _matrixAlien;
             //Draw the bullet
-            g.DrawImage(alienImg, alienRec);
+            g.DrawImage(_alienImg, AlienRec);
         }
     }
 }

@@ -17,18 +17,18 @@ namespace _201COS_Game
             InitializeComponent();
 
             // Rotates the star's picturebox so it is parallel to the title
-            Image imgStar = PicStar.Image;
-            imgStar.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            Image _imgStar = PicStar.Image;
+            _imgStar.RotateFlip(RotateFlipType.Rotate90FlipNone);
             PicStar.Width = 130;
             PicStar.Height = 78;
-            PicStar.Image = imgStar;
+            PicStar.Image = _imgStar;
 
             // Rotates the bullet's picturebox so that it looks like it comes out of the gun
-            Image imgBullet = PicBullet.Image;
-            imgBullet.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            Image _imgBullet = PicBullet.Image;
+            _imgBullet.RotateFlip(RotateFlipType.Rotate90FlipNone);
             PicBullet.Width = 67;
             PicBullet.Height = 12;
-            PicBullet.Image = imgBullet;
+            PicBullet.Image = _imgBullet;
         }
 
         private void BtnPlay_Click(object sender, EventArgs e)

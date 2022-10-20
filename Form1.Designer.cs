@@ -39,7 +39,7 @@ namespace _201COS_Game
             this.TmrPlayer = new System.Windows.Forms.Timer(this.components);
             this.TmrGun = new System.Windows.Forms.Timer(this.components);
             this.TmrEnemySpawn = new System.Windows.Forms.Timer(this.components);
-            this.lblTime = new System.Windows.Forms.Label();
+            this.LblTime = new System.Windows.Forms.Label();
             this.TextTime = new System.Windows.Forms.Label();
             this.TmrTime = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
@@ -133,16 +133,16 @@ namespace _201COS_Game
             this.TmrEnemySpawn.Interval = 1000;
             this.TmrEnemySpawn.Tick += new System.EventHandler(this.TmrEnemySpawn_Tick);
             // 
-            // lblTime
+            // LblTime
             // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.BackColor = System.Drawing.SystemColors.Control;
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(298, 35);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(20, 22);
-            this.lblTime.TabIndex = 8;
-            this.lblTime.Text = "0";
+            this.LblTime.AutoSize = true;
+            this.LblTime.BackColor = System.Drawing.SystemColors.Control;
+            this.LblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblTime.Location = new System.Drawing.Point(298, 35);
+            this.LblTime.Name = "LblTime";
+            this.LblTime.Size = new System.Drawing.Size(20, 22);
+            this.LblTime.TabIndex = 8;
+            this.LblTime.Text = "0";
             // 
             // TextTime
             // 
@@ -239,7 +239,7 @@ namespace _201COS_Game
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(684, 564);
-            this.Controls.Add(this.lblTime);
+            this.Controls.Add(this.LblTime);
             this.Controls.Add(this.TextTime);
             this.Controls.Add(this.LblLives);
             this.Controls.Add(this.TextLives);
@@ -281,7 +281,7 @@ namespace _201COS_Game
         private System.Windows.Forms.Timer TmrPlayer;
         private System.Windows.Forms.Timer TmrGun;
         private System.Windows.Forms.Timer TmrEnemySpawn;
-        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Label LblTime;
         private System.Windows.Forms.Label TextTime;
         private System.Windows.Forms.Timer TmrTime;
         private System.Windows.Forms.MenuStrip MenuStrip;

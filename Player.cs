@@ -12,53 +12,53 @@ namespace _201COS_Game
 {
     class Player
     {
-        Image playerImg;// So it isn't a blank rectangle
-        public int x, y;// For movement
-        Bitmap PlayerImg;// So it can be modified
-        public float angleCalc;// The angle it needs to be rotated
+        Image _playerImg;// So it isn't a blank rectangle
+        public int X, Y;// For movement
+        Bitmap _playerBitmap;// So it can be modified
+        public float AngleCalc;// The angle it needs to be rotated
 
         //Create a constructor (initialises the values of the fields)
         public Player()
         {
-            x = 280;
-            y = 210;
-            playerImg = Properties.Resources.player2;// Sets the player image 
+            X = 280;
+            Y = 210;
+            _playerImg = Properties.Resources.player2;// Sets the player image 
         }
-        public void MoveRotatePlayer(Rectangle playerRec, float mouseX, float mouseY, Graphics g)
+        public void MoveRotatePlayer(Rectangle PlayerRec, float _mouseX, float _mouseY, Graphics g)
         {
-            playerRec.Location = new Point(x, y);// Sets the player's location
+            PlayerRec.Location = new Point(X, Y);// Sets the player's location
 
             //get the direction of the mouse by looking at the position of the picture box in relation to the mouse pointer
-            Vector2 PicPlayerPlane = new Vector2(mouseX - playerRec.Location.X, mouseY - playerRec.Location.Y);
+            Vector2 _picPlayerPlane = new Vector2(_mouseX - PlayerRec.Location.X, _mouseY - PlayerRec.Location.Y);
 
             //https://en.wikipedia.org/wiki/Atan2
             //atan2 - calculates the angle between the x axis and the ray line to a point. gt 0
             //57.2978 is a constant used for radians to degrees conversion (One radian is equal 57.295779513 degrees)
             //https://en.wikipedia.org/wiki/Radian
-            float convertToDeg = (float)(180 / Math.PI);
+            float _convertToDeg = (float)(180 / Math.PI);
 
-            angleCalc = (float)(Math.Atan2(PicPlayerPlane.Y - 10, PicPlayerPlane.X - 10) * convertToDeg);// Calculates the angle that the player needs to rotate to point at the cursor
+            AngleCalc = (float)(Math.Atan2(_picPlayerPlane.Y - 10, _picPlayerPlane.X - 10) * _convertToDeg);// Calculates the angle that the player needs to rotate to point at the cursor
 
-            Bitmap calcBitmap = new Bitmap(playerImg, 100, 100);// Creates a bitmap with the image so it can be manipulated
+            Bitmap _calcBitmap = new Bitmap(_playerImg, 100, 100);// Creates a bitmap with the image so it can be manipulated
 
-            PlayerImg = RotateImage(calcBitmap, angleCalc);// Runs the rotate function with the calculated angle
-            g.DrawImage(PlayerImg, playerRec);// Draws the player after its been rotated
+            _playerBitmap = RotateImage(_calcBitmap, AngleCalc);// Runs the rotate function with the calculated angle
+            g.DrawImage(_playerBitmap, PlayerRec);// Draws the player after its been rotated
         }
 
-        public Bitmap RotateImage(Bitmap calcBitMap, float angle)
+        public Bitmap RotateImage(Bitmap _calcBitMap, float _angle)
         {
-            using (Graphics g = Graphics.FromImage(calcBitMap))
+            using (Graphics g = Graphics.FromImage(_calcBitMap))
             {
                 //move rotation point to center of image
-                g.TranslateTransform((float)calcBitMap.Width / 2, (float)calcBitMap.Height / 2);
+                g.TranslateTransform((float)_calcBitMap.Width / 2, (float)_calcBitMap.Height / 2);
                 //rotate
-                g.RotateTransform(angle);
+                g.RotateTransform(_angle);
                 //move image back
-                g.TranslateTransform(-(float)calcBitMap.Width / 2, -(float)calcBitMap.Height / 2);
+                g.TranslateTransform(-(float)_calcBitMap.Width / 2, -(float)_calcBitMap.Height / 2);
                 //draw passed in image onto graphics object
-                g.DrawImage(calcBitMap, new PointF(0, 0));
+                g.DrawImage(_calcBitMap, new PointF(0, 0));
             }
-            return calcBitMap;// Returns so it can be used to draw the player
+            return _calcBitMap;// Returns so it can be used to draw the player
         }
     }
 }

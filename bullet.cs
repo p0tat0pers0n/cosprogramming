@@ -6,53 +6,53 @@ namespace _201COS_Game
 {
     class Bullet
     {
-        public Rectangle bulletRec;
-        public Image bullet;
-        public int bulletX, bulletY, width, height, startingGameTime;
-        public int bulletRotated;
-        public double xSpeed, ySpeed;
-        public Matrix matrixBullet;//matrix to enable us to rotate bullet in the same angle as the player
-        Point centreBullet;//centre of bullet
+        public Rectangle BulletRec;
+        Image _bulletImg;
+        public int StartingGameTime;
+        int _bulletRotated, _bulletX, _bulletY, _width, _height;
+        double _xSpeed, _ySpeed;
+        Matrix _matrixBullet;//matrix to enable us to rotate bullet in the same angle as the player
+        Point _centreBullet;//centre of bullet
 
-        public Bullet(Rectangle playerRec, int bulletRotate, int playerX, int playerY, int gameTime)
+        public Bullet(Rectangle _playerRec, int _bulletRotate, int _playerX, int _playerY, int _gameTime)
         {
-            bulletX = playerRec.X + 37; // move bullet to middle of player
-            bulletY = playerRec.Y;
-            width = 10;
-            height = 60;
-            bullet = Properties.Resources.newbullet;
-            startingGameTime = gameTime;
-            bulletRec = new Rectangle(playerX+50, playerY+50, width, height);
+            _bulletX = _playerRec.X + 37; // move bullet to middle of player
+            _bulletY = _playerRec.Y;
+            _width = 10;
+            _height = 60;
+            _bulletImg = Properties.Resources.newbullet;
+            StartingGameTime = _gameTime;
+            BulletRec = new Rectangle(_playerX+50, _playerY+50, _width, _height);
 
             //this code works out the speed of the bullet to be used in the moveBullet method
-            xSpeed = 30 * (Math.Cos((bulletRotate - 90) * Math.PI / 180));
-            ySpeed = 30 * (Math.Sin((bulletRotate + 90) * Math.PI / 180));
+            _xSpeed = 30 * (Math.Cos((_bulletRotate - 90) * Math.PI / 180));
+            _ySpeed = 30 * (Math.Sin((_bulletRotate + 90) * Math.PI / 180));
             //calculate x,y to move bullet to middle of spaceship in drawBullet method
-            bulletX = playerX + playerRec.Width / 2;
-            bulletY = playerY + playerRec.Height / 2;
-            //pass bulletRotate angle to bulletRotated so that it can be used in the drawBullet method
-            bulletRotated = bulletRotate;
+            _bulletX = _playerX + _playerRec.Width / 2;
+            _bulletY = _playerY + _playerRec.Height / 2;
+            //pass _bulletRotate angle to bulletRotated so that it can be used in the drawBullet method
+            _bulletRotated = _bulletRotate;
         }
 
         public void draw(Graphics g)
         {
             //centre bullet 
-            centreBullet = new Point(bulletX, bulletY);
+            _centreBullet = new Point(_bulletX, _bulletY);
             //instantiate a Matrix object called matrixBullet
-            matrixBullet = new Matrix();
+            _matrixBullet = new Matrix();
             //rotate the matrix (in this case bulletRec) about its centre
-            matrixBullet.RotateAt(bulletRotated, centreBullet);
+            _matrixBullet.RotateAt(_bulletRotated, _centreBullet);
             //Set the current draw location to the rotated matrix point i.e. where bulletRec is now
-            g.Transform = matrixBullet;
+            g.Transform = _matrixBullet;
             //Draw the bullet
-            g.DrawImage(bullet, bulletRec);
+            g.DrawImage(_bulletImg, BulletRec);
         }
 
         public void moveBullet()
         {
-            bulletX += (int)xSpeed;//cast double to an integer value
-            bulletY -= (int)ySpeed;
-            bulletRec.Location = new Point(bulletX, bulletY);//bullets new location
+            _bulletX += (int)_xSpeed;//cast double to an integer value
+            _bulletY -= (int)_ySpeed;
+            BulletRec.Location = new Point(_bulletX, _bulletY);//bullets new location
         }
     }
 }
